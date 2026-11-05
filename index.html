@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding of Meisya & Kholiliy</title>
+    
+    <!-- 3 GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        cursive: ['"Dancing Script"', 'cursive'],
+                    },
+                    colors: {
+                        navy: '#0f172a',
+                        gold: '#fbbf24',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Global & Animations */
+        :root {
+            --paper-floral-pattern: url("aset/paper-floral.svg");
+            --frame-classic-image: url("aset/frame-classic-gold.png");
+            --frame-floral-image: url("aset/frame-floral-navy.png");
+        }
+        html { scroll-behavior: smooth; }
+        body { background-color: #fffaf3; overflow-x: hidden; }
+        
+        /* Scroll Reveal (Intersection Observer) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Curtain Animation */
+        .curtain { transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1); }
+        #curtain-left,
+        #curtain-right {
+            background-color: #fff;
+            background-image:
+                var(--paper-floral-pattern),
+                radial-gradient(ellipse at 50% 45%, rgba(255,255,255,.98) 0 22%, rgba(235,246,252,.86) 76%),
+                linear-gradient(145deg, #fff, #eaf5fb 58%, #fff);
+            background-size: 260px 260px, auto, cover;
+            background-repeat: repeat, no-repeat, no-repeat;
+        }
+        .curtain-left.open { transform: translateX(-100%); }
+        .curtain-right.open { transform: translateX(100%); }
+        .fade-out { opacity: 0; pointer-events: none; transition: opacity 1.5s ease; }
+
+        /* 3D Gate Animation */
+        .gate { transition: transform 1.5s ease-in-out; }
+        .gate-left.open { transform: perspective(1200px) rotateY(-95deg); transform-origin: left; }
+        .gate-right.open { transform: perspective(1200px) rotateY(95deg); transform-origin: right; }
+
+        /* Styling Accents */
+        .gold-text {
+            background: linear-gradient(to right, #fef08a, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(251, 191, 36, 0.2);
+        }
+        .gold-btn {
+            background: linear-gradient(90deg, #fbbf24, #d97706);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+            transition: all 0.3s ease;
+        }
+        .gold-btn:hover {
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* Premium portrait and gallery frames */
+        .premium-frame {
+            position: relative;
+            isolation: isolate;
+            width: 100%;
+            height: auto !important;
+            aspect-ratio: 2 / 3;
+            padding: 0;
+            border: clamp(20px, 5vw, 36px) solid transparent;
+            border-image: var(--frame-classic-image) 9% 9% fill / 1 / 0 stretch;
+            border-radius: 0;
+            box-shadow: 0 16px 38px rgba(30, 65, 87, 0.13);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .premium-frame::after {
+            content: none;
+        }
+        .premium-frame img {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            width: 76%;
+            height: 74%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #fff;
+            border-radius: 8px;
+            aspect-ratio: auto;
+            object-fit: cover;
+            cursor: zoom-in; transition: transform 0.45s ease, filter 0.35s ease;
+        }
+        .profile-frame {
+            aspect-ratio: 735 / 1041;
+            border-image-source: var(--frame-floral-image);
+        }
+        .profile-frame img {
+            width: 68%;
+            height: auto;
+            aspect-ratio: 1;
+            border-radius: 9999px;
+        }
+        main > section img {
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14), 0 0 0 3px rgba(214, 170, 79, 0.14);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+        }
+        main > section img:focus-visible {
+            outline: 3px solid #e8bd5d;
+            outline-offset: 5px;
+        }
+
+        /* Toast Message */
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: rgba(15, 23, 42, 0.9); color: #fbbf24; padding: 12px 24px;
+            border-radius: 50px; font-family: 'Montserrat', sans-serif; font-weight: bold;
+            opacity: 0; pointer-events: none; transition: all 0.3s ease; z-index: 9999;
+            border: 1px solid #fbbf24; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        
+        /* Floating Audio */
+        .spin-slow { animation: spin 4s linear infinite; }
+        .spin-slow.paused { animation-play-state: paused; }
+        .hero-photo-frame {
+            position: relative;
+            width: min(100%, 34rem);
+            aspect-ratio: 16 / 9;
+            margin: 0 auto clamp(1.25rem, 4vw, 2rem);
+            padding: clamp(.45rem, 1.6vw, .7rem);
+            border: 1px solid rgba(185, 140, 66, .72);
+            background: linear-gradient(135deg, #fffdf9, #f3e4bf 48%, #fffaf3);
+            box-shadow: 0 14px 34px rgba(35, 54, 68, .14), inset 0 0 0 3px rgba(255,255,255,.82);
+        }
+        .hero-photo-frame::before {
+            content: '';
+            position: absolute;
+            inset: clamp(.45rem, 1.6vw, .7rem);
+            border: 1px solid rgba(185, 140, 66, .48);
+            pointer-events: none;
+        }
+        .hero-photo-frame::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(185, 140, 66, .42);
+            font-size: clamp(1.25rem, 4vw, 2rem);
+            text-shadow: 0 1px 5px rgba(255,255,255,.9);
+            pointer-events: none;
+        }
+        .invitation-header {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: max(1rem, env(safe-area-inset-top)) 1rem .85rem;
+            border-bottom: 1px solid rgba(201, 155, 67, .28);
+            background: #fffaf3;
+            text-align: center;
+        }
+        .invitation-header-label {
+            color: #94702e;
+            font: 600 .65rem/1.4 Montserrat, sans-serif;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+        }
+        .bouquet-dialog {
+            position: fixed;
+            inset: 0;
+            z-index: 400;
+            display: grid;
+            place-items: center;
+            overflow-y: auto;
+            padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+            background: rgba(10, 19, 36, .82);
+            backdrop-filter: blur(12px);
+        }
+        .bouquet-dialog[hidden] { display: none; }
+        .bouquet-card {
+            position: relative;
+            width: min(100%, 760px);
+            max-height: min(92dvh, 960px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            border: 1px solid rgba(198, 157, 76, .68);
+            background:
+                var(--paper-floral-pattern),
+                linear-gradient(145deg, #fffdf9, #fffaf3 68%, #f8f0df);
+            background-size: 260px 260px, cover;
+            background-repeat: repeat, no-repeat;
+            box-shadow: 0 28px 90px rgba(0, 0, 0, .38), inset 0 0 0 5px rgba(255,255,255,.72);
+        }
+        .bouquet-dialog-close {
+            position: sticky;
+            top: .75rem;
+            z-index: 2;
+            float: right;
+            margin: .75rem .75rem 0 0;
+        }
+        .bouquet-card-content {
+            clear: both;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1.25rem;
+            padding: 0 clamp(1.1rem, 5vw, 2.5rem) clamp(1.25rem, 5vw, 2.5rem);
+        }
+        .bouquet-illustration {
+            display: grid;
+            min-height: 12rem;
+            place-items: center;
+            padding: 1rem;
+            border: 1px solid rgba(198,157,76,.35);
+            border-radius: 1.25rem;
+            background: radial-gradient(ellipse at 50% 40%, rgba(255,255,255,.94), rgba(255,250,243,.74));
+        }
+        .bouquet-illustration svg,
+        .bouquet-illustration img {
+            display: block;
+            width: min(100%, 15rem);
+            height: auto;
+            max-height: 16rem;
+        }
+        .bouquet-copy { min-width: 0; }
+        .bouquet-copy h2 {
+            color: #172d40;
+            font: 600 clamp(1.65rem, 6vw, 2.25rem)/1.15 "Playfair Display", serif;
+            text-wrap: balance;
+        }
+        .bouquet-copy p {
+            color: #526575;
+            font: 400 .93rem/1.75 Montserrat, sans-serif;
+        }
+        .bouquet-impressions {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: .65rem;
+        }
+        .bouquet-impression-choice {
+            position: relative;
+            display: flex;
+            min-width: 0;
+            align-items: center;
+            gap: .7rem;
+            overflow: hidden;
+            padding: .8rem 1rem;
+            border: 1px solid rgba(185, 140, 66, .4);
+            border-radius: 1rem;
+            background: rgba(255,255,255,.78);
+            color: #263b4b;
+            font: 600 .85rem/1.4 Montserrat, sans-serif;
+            text-align: left;
+            transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+        }
+        .bouquet-impression-choice:hover { transform: translateY(-2px); }
+        .bouquet-impression-choice:focus-visible,
+        #bouquet-continue:focus-visible,
+        #bouquet-philosophy-open:focus-visible {
+            outline: 3px solid #c99b43;
+            outline-offset: 3px;
+        }
+        .bouquet-impression-choice[aria-pressed="true"] {
+            border-color: #c99b43;
+            box-shadow: 0 0 0 3px rgba(201,155,67,.16), 0 8px 20px rgba(54,73,87,.1);
+        }
+        .bouquet-impression-choice[data-impression="syukur"][aria-pressed="true"] { background: #fff4d8; }
+        .bouquet-impression-choice[data-impression="tenang"][aria-pressed="true"] { background: #eaf3f7; }
+        .bouquet-impression-choice[data-impression="harapan"][aria-pressed="true"] { background: #f5edf7; }
+        .bouquet-impression-icon {
+            display: grid;
+            flex: 0 0 2.25rem;
+            width: 2.25rem;
+            height: 2.25rem;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(214,170,79,.14);
+            font-size: 1.1rem;
+        }
+        .bouquet-impression-choice[data-impression="syukur"].is-selected { animation: bouquet-glow .65s ease; }
+        .bouquet-impression-choice[data-impression="tenang"].is-selected { animation: bouquet-breathe .65s ease; }
+        .bouquet-impression-choice[data-impression="harapan"].is-selected { animation: bouquet-lift .65s ease; }
+        #bouquet-impression-feedback {
+            min-height: 2.75rem;
+            border-left: 3px solid #c99b43;
+            padding: .35rem .75rem;
+            color: #526575;
+            font: 500 .82rem/1.6 Montserrat, sans-serif;
+        }
+        #bouquet-impression-feedback[hidden],
+        #bouquet-continue[hidden] { display: none; }
+        @keyframes bouquet-glow {
+            50% { box-shadow: 0 0 0 7px rgba(214,170,79,.24), 0 0 28px rgba(214,170,79,.3); }
+        }
+        @keyframes bouquet-breathe {
+            50% { transform: scale(1.025); box-shadow: 0 0 24px rgba(91,140,171,.25); }
+        }
+        @keyframes bouquet-lift {
+            40% { transform: translateY(-5px); }
+            70% { transform: translateY(1px); }
+        }
+        @media (min-width: 600px) {
+            .bouquet-card-content { grid-template-columns: minmax(10rem, .72fr) minmax(0, 1.28fr); align-items: center; }
+            .bouquet-impressions { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .bouquet-impression-choice { flex-direction: column; align-items: flex-start; min-height: 7rem; }
+        }
+
+        /* Consistent paper and navy section palette */
+        body { background-color: #fffaf3; color: #172d40; }
+        main > section {
+            position: relative;
+            padding-block: clamp(4rem, 7vw, 6.5rem) !important;
+            background-image: none !important;
+            background-attachment: scroll !important;
+        }
+        main > section.bg-white,
+        main > section.bg-slate-50,
+        main > section.bg-amber-50 { background-color: #fffaf3 !important; }
+        main > section.bg-navy,
+        main > section.bg-slate-900 {
+            background-color: #101d36 !important;
+        }
+        main > section.premium-texture.bg-white,
+        main > section.premium-texture.bg-slate-50,
+        main > section.premium-texture.bg-amber-50 {
+            background-image: var(--paper-floral-pattern) !important;
+            background-size: 260px 260px !important;
+            background-repeat: repeat !important;
+        }
+        main > section.premium-texture.bg-navy,
+        main > section.premium-texture.bg-slate-900 {
+            background-image: none !important;
+        }
+        footer { background-color: #101d36 !important; }
+        main > section::before,
+        footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.24;
+            background:
+                radial-gradient(ellipse at 12% 22%, rgba(255, 222, 141, 0.28), transparent 20%),
+                radial-gradient(ellipse at 88% 28%, rgba(255, 219, 128, 0.2), transparent 18%),
+                radial-gradient(ellipse at 75% 82%, rgba(230, 181, 79, 0.16), transparent 22%);
+            animation: gold-glow 5s ease-in-out infinite alternate;
+        }
+        main > section::after,
+        footer::after {
+            content: '';
+            position: absolute;
+            width: 0.45rem;
+            height: 0.45rem;
+            top: 24%;
+            right: 18%;
+            border-radius: 50%;
+            pointer-events: none;
+            background: #ffe7a3;
+            box-shadow:
+                -55vw 25vh 0 -1px #e8bd5d,
+                -32vw -12vh 0 -1px #fff1bd,
+                16vw 35vh 0 -1px #f4d27c,
+                30vw -10vh 0 -1px #d6aa4f,
+                -12vw 46vh 0 -1px #fff1bd,
+                24vw 52vh 0 -1px #e8bd5d,
+                0 0 10px 2px rgba(255, 219, 128, 0.24);
+            animation: gold-twinkle 3s ease-in-out infinite alternate;
+        }
+        #curtain-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 105;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 18% 24%, rgba(220, 178, 92, .46) 0 1px, transparent 2px),
+                radial-gradient(circle at 79% 19%, rgba(220, 178, 92, .42) 0 1px, transparent 2px),
+                radial-gradient(circle at 32% 78%, rgba(220, 178, 92, .4) 0 1px, transparent 2px),
+                radial-gradient(circle at 86% 74%, rgba(220, 178, 92, .45) 0 1px, transparent 2px);
+            animation: gold-twinkle 3.8s ease-in-out infinite alternate;
+        }
+        .invitation-share-card {
+            background-image:
+                var(--paper-floral-pattern),
+                linear-gradient(145deg, rgba(255,255,255,.92), rgba(235,246,252,.86));
+            background-size: 260px 260px, cover;
+            background-repeat: repeat, no-repeat;
+            border: 1px solid rgba(198, 157, 76, .42);
+            box-shadow: 0 24px 70px rgba(30, 65, 87, .12), inset 0 0 0 5px rgba(255,255,255,.72);
+            backdrop-filter: blur(12px);
+        }
+        .recipient-greeting {
+            top: max(5rem, calc(env(safe-area-inset-top) + 3.75rem));
+            z-index: 110;
+        }
+        .curtain-actions { bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+        #share-link-result[hidden] { display: none; }
+        .private-note-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 250;
+            display: grid;
+            place-items: center;
+            overflow-y: auto;
+            padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+            background:
+                radial-gradient(ellipse at 18% 12%, rgba(255,255,255,.92), transparent 38%),
+                radial-gradient(ellipse at 88% 82%, rgba(231,195,118,.2), transparent 32%),
+                rgba(13, 35, 51, .88);
+            backdrop-filter: blur(14px);
+        }
+        .private-note-layer[hidden] { display: none; }
+        .private-note-card {
+            width: min(100%, 720px);
+            max-height: min(92dvh, 960px);
+            overflow-y: auto;
+            border: 1px solid rgba(216, 184, 115, .75);
+            background:
+                var(--paper-floral-pattern),
+                radial-gradient(circle at 16% 12%, rgba(255,255,255,.9), transparent 32%),
+                linear-gradient(145deg, #fff, #eff7fb 68%, #fffaf0);
+            background-size: 260px 260px, auto, cover;
+            background-repeat: repeat, no-repeat, no-repeat;
+            box-shadow: 0 28px 90px rgba(0,0,0,.32), inset 0 0 0 6px rgba(255,255,255,.65);
+            animation: note-arrive .65s cubic-bezier(.2,.8,.2,1) both;
+        }
+        .private-note-card:focus { outline: none; }
+        .private-note-progress {
+            height: .42rem;
+            overflow: hidden;
+            border-radius: 999px;
+            background: rgba(144, 176, 195, .25);
+        }
+        .private-note-progress > span {
+            display: block;
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #d6aa4f, #f8df98);
+            transition: width .55s ease;
+        }
+        .memory-step[hidden] { display: none; }
+        .memory-step { animation: note-arrive .45s ease both; }
+        .private-memory-album {
+            padding: clamp(1rem, 3vw, 1.5rem);
+            border: 1px solid rgba(198,157,76,.38);
+            border-radius: 1.5rem;
+            background-image:
+                var(--paper-floral-pattern),
+                linear-gradient(145deg, rgba(255,255,255,.82), rgba(235,246,252,.74));
+            background-size: 260px 260px, cover;
+            background-repeat: repeat, no-repeat;
+            box-shadow: inset 0 0 0 4px rgba(255,255,255,.56);
+        }
+        .private-note-card:has(.private-memory-album) { width: min(100%, 860px); }
+        .private-memory-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: start;
+            gap: clamp(.55rem, 2vw, 1rem);
+        }
+        #memory-start { padding: clamp(1rem, 4vw, 2rem); }
+        .private-memory-frame {
+            position: relative;
+            min-width: 0;
+            width: 100%;
+            padding: .55rem;
+            border: clamp(18px, 4vw, 28px) solid transparent;
+            border-image: var(--frame-classic-image) 9% 9% fill / 1 / 0 stretch;
+            border-radius: 0;
+            background: #fffaf3;
+            box-shadow: 0 14px 32px rgba(35,67,86,.12), inset 0 0 0 3px rgba(255,255,255,.8);
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+        .private-memory-frame::before {
+            content: '✦';
+            position: absolute;
+            z-index: 2;
+            top: .7rem;
+            right: .8rem;
+            color: #b98c42;
+            font-size: .85rem;
+            text-shadow: 0 1px 5px rgba(255,255,255,.9);
+            pointer-events: none;
+        }
+        .private-memory-frame:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 19px 38px rgba(35,67,86,.16), 0 0 18px rgba(214,170,79,.16);
+        }
+        .private-memory-frame[role="button"] { cursor: zoom-in; }
+        .private-memory-frame:focus-visible {
+            outline: 3px solid #c99b43;
+            outline-offset: 4px;
+        }
+        .private-memory-frame:not(.private-memory-video-frame) > .private-memory-photo,
+        .private-memory-video-frame > .private-memory-video,
+        .private-memory-frame > .private-memory-placeholder {
+            filter: blur(7px);
+            transform: scale(1.04);
+            transition: filter .3s ease, transform .3s ease;
+        }
+        .private-memory-frame:hover:not(.private-memory-video-frame) > .private-memory-photo,
+        .private-memory-frame:hover > .private-memory-placeholder {
+            filter: blur(5px);
+        }
+        .private-memory-frame > .private-memory-caption { filter: none; }
+        .private-memory-frame.is-video-open > .private-memory-video { filter: none; }
+        .bestie-portrait-frame {
+            position: relative;
+            isolation: isolate;
+            display: grid;
+            place-items: center;
+            width: clamp(8rem, 26vw, 10rem);
+            aspect-ratio: 1;
+            margin: 0 auto 1rem;
+        }
+        .bestie-portrait-frame::after {
+            content: '';
+            position: absolute;
+            inset: -1%;
+            z-index: 2;
+            pointer-events: none;
+            background: url("aset/frame-round-bestie.png") center / 100% 150% no-repeat;
+            mix-blend-mode: multiply;
+        }
+        .bestie-portrait-frame img {
+            width: 70%;
+            height: auto;
+            aspect-ratio: 1;
+            border: 0;
+            border-radius: 50%;
+            box-shadow: none;
+            object-fit: cover;
+        }
+        .private-memory-photo {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 3;
+            border: 3px solid white;
+            border-radius: .9rem;
+            object-fit: cover;
+            cursor: zoom-in;
+        }
+        .private-memory-video {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            border: 3px solid white;
+            border-radius: .9rem;
+            background:
+                radial-gradient(circle at 50% 40%, rgba(255,255,255,.88), transparent 35%),
+                linear-gradient(145deg, #c6dce8, #f9f4e8 60%, #d7bd81);
+            object-fit: cover;
+        }
+        .private-memory-placeholder {
+            display: grid;
+            width: 100%;
+            min-height: 6rem;
+            aspect-ratio: 4 / 3;
+            place-items: center;
+            padding: .8rem;
+            border: 3px solid #fff;
+            border-radius: .9rem;
+            background:
+                var(--paper-floral-pattern),
+                radial-gradient(circle at 75% 18%, rgba(255,255,255,.9), transparent 28%),
+                linear-gradient(145deg, #eaf5fb, #fff8e9);
+            background-size: 260px 260px, auto, cover;
+            background-repeat: repeat, no-repeat, no-repeat;
+            color: #526977;
+            text-align: center;
+        }
+        .private-memory-placeholder[hidden],
+        .private-memory-video[hidden],
+        .private-memory-photo[hidden] { display: none; }
+        .private-memory-caption {
+            min-height: 2.5rem;
+            display: grid;
+            place-items: center;
+            padding: .55rem .25rem .1rem;
+            color: #506575;
+            font: 500 .72rem/1.35 Montserrat, sans-serif;
+            text-align: center;
+        }
+        .private-memory-video-frame { grid-column: 1 / -1; }
+        @media (min-width: 480px) {
+            .private-memory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .private-memory-frame:nth-child(3) {
+                grid-column: 1 / -1;
+                width: min(100%, 24rem);
+                justify-self: center;
+            }
+        }
+        @media (min-width: 768px) {
+            .private-memory-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .private-memory-frame:nth-child(3) {
+                grid-column: auto;
+                width: 100%;
+            }
+            .private-memory-video-frame {
+                grid-column: 1 / -1;
+                width: min(100%, 44rem);
+                justify-self: center;
+            }
+        }
+        .memory-challenge-star {
+            display: inline-grid;
+            width: 3.4rem;
+            height: 3.4rem;
+            place-items: center;
+            border: 1px solid rgba(198,157,76,.56);
+            border-radius: 999px;
+            color: #a8792b;
+            background: rgba(255,255,255,.78);
+            font-size: 1.5rem;
+            transition: transform .25s ease, color .25s ease, background .25s ease;
+        }
+        .memory-challenge-star.found {
+            transform: scale(1.12) rotate(12deg);
+            color: #fff;
+            background: linear-gradient(145deg, #e7c16f, #bb8739);
+            box-shadow: 0 0 22px rgba(214,170,79,.34);
+        }
+        #private-goodbye[hidden],
+        #private-password-error[hidden],
+        #private-letter-finale[hidden] { display: none; }
+        #private-password:focus-visible,
+        #private-note-layer button:focus-visible {
+            outline: 3px solid #c99b43;
+            outline-offset: 3px;
+        }
+        @keyframes note-arrive {
+            from { opacity: 0; transform: translateY(14px) scale(.985); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes gold-glow {
+            from { opacity: 0.18; }
+            to { opacity: 0.3; }
+        }
+        @keyframes gold-twinkle {
+            from { opacity: 0.18; transform: scale(0.85); }
+            to { opacity: 0.42; transform: scale(1.1); }
+        }
+        main h2 {
+            font-size: clamp(2.8rem, 9vw, 8rem) !important;
+            line-height: 1.08;
+            overflow-wrap: anywhere;
+        }
+        main h2 span { font-size: clamp(2.4rem, 7.5vw, 7rem) !important; }
+        main h3 {
+            max-width: 100%;
+            font-size: clamp(1.8rem, 4.4vw, 3rem) !important;
+            line-height: 1.2;
+            text-wrap: balance;
+            padding-bottom: 0.9rem;
+            position: relative;
+        }
+        main h3::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: min(7rem, 30vw);
+            height: 0.45rem;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, transparent, #d6aa4f, #f8df98, #d6aa4f, transparent);
+            border-radius: 9999px;
+            box-shadow: 0 3px 12px rgba(214, 170, 79, 0.2);
+        }
+        .gold-text {
+            background-image: linear-gradient(105deg, #fff2c6 0%, #e6c477 48%, #b88a3f 100%);
+            text-shadow: 0 2px 14px rgba(214, 170, 79, 0.28);
+        }
+        .gold-btn {
+            background: linear-gradient(110deg, #f8df98 0%, #e8bc5c 52%, #c28b36 100%);
+            box-shadow: 0 8px 24px rgba(169, 119, 36, 0.24);
+        }
+        .gold-btn:hover { box-shadow: 0 10px 28px rgba(169, 119, 36, 0.35); }
+        main > section .grid > div,
+        main > section .grid > article,
+        main > section .grid > button {
+            transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+        }
+        main > section .grid > button { cursor: pointer; }
+        main > section .grid > button:focus-visible,
+        main > section a:focus-visible,
+        main > section button:focus-visible,
+        #photo-lightbox button:focus-visible {
+            outline: 3px solid #c99b43;
+            outline-offset: 4px;
+        }
+        main > section .space-y-16 > div {
+            padding: 1rem;
+            margin-left: -1rem;
+            border-radius: 1rem;
+            transition: background-color 0.25s ease, transform 0.25s ease;
+        }
+        main > section .space-y-16 > div:hover {
+            background: rgba(214, 170, 79, 0.08);
+            transform: translateX(4px);
+        }
+        .message-frame {
+            border: clamp(22px, 5vw, 44px) solid transparent !important;
+            border-image: var(--frame-classic-image) 9% 9% fill / 1 / 0 stretch !important;
+            border-radius: 0 !important;
+            background-color: #fffaf3;
+            box-shadow: 0 22px 60px rgba(15, 23, 42, 0.13) !important;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .guestbook-card {
+            position: relative;
+            border: 1px solid rgba(214, 170, 79, 0.48) !important;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08), inset 0 0 0 4px rgba(214, 170, 79, 0.06) !important;
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+        }
+        .guestbook-card::before {
+            content: '✦';
+            position: absolute;
+            top: 0.65rem;
+            right: 0.9rem;
+            color: #c99b43;
+            opacity: 0.72;
+        }
+        .photo-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: grid;
+            place-items: center;
+            padding: 1rem;
+            background: rgba(10, 19, 36, 0.94);
+            backdrop-filter: blur(12px);
+        }
+        body.private-note-open #photo-lightbox { z-index: 350; }
+        .photo-lightbox[hidden] { display: none; }
+        .photo-lightbox-frame {
+            width: min(100%, 960px);
+            max-height: 90vh;
+            padding: clamp(1.25rem, 4vw, 2rem);
+            border: clamp(20px, 5vw, 36px) solid transparent;
+            border-image: var(--frame-classic-image) 9% 9% fill / 1 / 0 stretch;
+            border-radius: 0;
+            background-color: #fffaf3;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55), 0 0 40px rgba(232, 189, 93, 0.15);
+        }
+        .photo-lightbox-frame img {
+            display: block;
+            max-width: 100%;
+            max-height: calc(90vh - 9rem);
+            margin: 0 auto;
+            object-fit: contain;
+            border: 2px solid #fff;
+            border-radius: .25rem;
+        }
+        .photo-lightbox-frame img[hidden] { display: none; }
+        .photo-lightbox-frame video {
+            display: block;
+            width: 100%;
+            max-height: calc(90vh - 9rem);
+            margin: 0 auto;
+            border: 2px solid #fff;
+            border-radius: .25rem;
+            background: #101d36;
+        }
+        .photo-lightbox-frame video[hidden] { display: none; }
+        .photo-lightbox-frame figcaption {
+            color: #172d40;
+            overflow-wrap: anywhere;
+        }
+        #photo-lightbox-close {
+            position: absolute;
+            top: max(1rem, env(safe-area-inset-top));
+            right: max(1rem, env(safe-area-inset-right));
+        }
+        @media (hover: hover) {
+            main > section .grid > div:hover,
+            main > section .grid > article:hover,
+            main > section .grid > button:hover,
+            .message-frame:hover,
+            .guestbook-card:hover,
+            .premium-frame:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 18px 42px rgba(15, 23, 42, 0.15), 0 0 22px rgba(214, 170, 79, 0.14);
+            }
+            .premium-frame:hover img { transform: translate(-50%, -50%) scale(1.025); }
+            main > section .premium-frame img:hover { filter: saturate(1.08); }
+            main > section img[role="button"]:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 16px 34px rgba(15, 23, 42, 0.2), 0 0 0 4px rgba(214, 170, 79, 0.32);
+            }
+        }
+        main > section .grid > button:active { transform: scale(0.985); }
+        main > section [class*="rounded-2xl"],
+        main > section [class*="rounded-3xl"],
+        main > section [class*="rounded-[2rem]"] {
+            border-color: rgba(190, 149, 65, 0.34);
+        }
+        main > section .bg-slate-50[class*="rounded-"] { background-color: #f7fbfe; }
+        #rsvp-form { width: 100%; }
+        #rsvp-form input,
+        #rsvp-form select,
+        #rsvp-form textarea { border-color: #cbdde8; transition: border-color .2s ease, box-shadow .2s ease; }
+        #rsvp-form input:focus,
+        #rsvp-form select:focus,
+        #rsvp-form textarea:focus {
+            border-color: #c99b43;
+            box-shadow: 0 0 0 3px rgba(201, 155, 67, 0.14);
+        }
+        .toast { background-color: rgba(16, 29, 54, 0.96); border-color: #d6aa4f; }
+        #audio-player { box-shadow: 0 0 0 3px rgba(232, 189, 93, 0.16), 0 0 24px rgba(232, 189, 93, 0.42); }
+        #audio-player:focus-visible { outline: 3px solid #f8df98; outline-offset: 4px; }
+
+        @media (max-width: 640px) {
+            main > section { padding-inline: 1rem; }
+            main > section h3 { margin-bottom: 1.75rem; }
+            #rsvp-form { padding: 1.25rem; }
+            #audio-player { right: 1rem; bottom: 1rem; }
+            .toast { width: calc(100% - 2rem); text-align: center; }
+            .recipient-greeting { top: max(4rem, calc(env(safe-area-inset-top) + 3rem)); }
+            .private-note-card { padding: 1.35rem; border-radius: 1.5rem; }
+            .private-memory-album { padding: .7rem; }
+            .private-memory-frame { padding: .45rem; border-radius: 1rem; }
+            .private-memory-caption { font-size: .65rem; }
+        }
+        @media (max-height: 650px) {
+            .recipient-greeting { top: max(3rem, calc(env(safe-area-inset-top) + 2.25rem)); }
+            .curtain-actions { bottom: max(.75rem, env(safe-area-inset-bottom)); gap: .65rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal { transition: none; transform: none; }
+            .gold-btn { transition: none; }
+            main > section.gold-sparkle::before,
+            main > section.gold-sparkle::after,
+            main > section::before,
+            main > section::after,
+            footer::before,
+            footer::after,
+            #curtain-container::after { animation: none; }
+            .private-note-card,
+            .memory-step { animation: none; }
+            .bouquet-impression-choice,
+            .bouquet-impression-choice.is-selected { animation: none; transition: none; }
+            .private-memory-frame { transition: none; }
+            main > section .grid > div,
+            main > section .grid > article,
+            main > section .grid > button,
+            .message-frame,
+            .guestbook-card,
+            .premium-frame,
+            .premium-frame img,
+            main > section img { transition: none; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-gold selection:text-navy">
+
+    <!-- Toast Notification -->
+    <div id="custom-toast" class="toast">Notifikasi</div>
+
+    <!-- Floating Audio Player -->
+    <div id="audio-player" role="button" tabindex="0" aria-label="Putar musik" aria-pressed="false" class="fixed bottom-6 right-6 z-[60] w-14 h-14 bg-navy rounded-full border-2 border-gold shadow-2xl flex items-center justify-center cursor-pointer hover:scale-110 transition-transform hidden">
+        <audio id="bg-music" loop>
+            <source src="aset/until-i-found-you.mp3" type="audio/mpeg">
+        </audio>
+        <div id="music-disc" class="w-10 h-10 rounded-full border border-slate-400 flex items-center justify-center spin-slow paused" style="background:radial-gradient(circle at 35% 30%, #fff, #dcecf4 62%, #b6d2e1)">
+            <div class="w-3 h-3 bg-navy rounded-full border border-gold"></div>
+        </div>
+        <!-- Music Note Icon -->
+        <svg class="absolute -top-2 -right-2 w-5 h-5 text-gold animate-bounce" fill="currentColor" viewBox="0 0 24 24"><path d="M9 18c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3v-7h6v2h-4v9c0 1.66-1.34 3-3 3z"/></svg>
+    </div>
+
+    <!-- S0: Curtain Reveal -->
+    <div id="curtain-container" class="fixed inset-0 z-[100]">
+        <div class="absolute inset-0 flex">
+            <div id="curtain-left" class="curtain curtain-left w-1/2 h-full bg-left relative border-r-2 border-gold shadow-2xl flex items-center justify-end">
+                <div class="absolute inset-0"></div>
+                <h1 class="gold-text text-5xl md:text-7xl font-cursive z-10 pr-4 md:pr-12">Meisya</h1>
+            </div>
+            <div id="curtain-right" class="curtain curtain-right w-1/2 h-full bg-right relative border-l-2 border-gold shadow-2xl flex items-center justify-start">
+                <div class="absolute inset-0"></div>
+                <h1 class="gold-text text-5xl md:text-7xl font-cursive z-10 pl-4 md:pl-12">Kholiliy</h1>
+            </div>
+        </div>
+
+        <div class="recipient-greeting absolute left-4 right-4 text-center pointer-events-none">
+            <p class="text-sky-900/80 uppercase tracking-[0.28em] text-[0.6rem] md:text-xs font-semibold">Undangan   pernikahan</p>
+            <p class="font-serif italic text-slate-600 mt-2 text-sm md:text-base">Kepada   Yth.</p>
+            <p id="recipient-name" class="font-serif text-sky-950 text-lg md:text-2xl mt-1 break-words">Bapak/Ibu/Saudara/i</p>
+        </div>
+        
+        <div class="curtain-actions absolute inset-x-0 flex flex-col items-center justify-center gap-4 pointer-events-none z-[110] px-4">
+            <button id="open-curtain-btn" class="pointer-events-auto gold-btn text-navy font-bold py-4 px-10 rounded-full text-base md:text-lg border-2 border-yellow-200 animate-pulse uppercase tracking-widest font-serif shadow-[0_0_40px_rgba(251,191,36,0.6)]">
+                Buka Undangan ✨
+            </button>
+        </div>
+
+    </div>
+
+    <div id="private-goodbye" class="fixed inset-0 z-[300] grid place-items-center bg-white/95 backdrop-blur-md p-5 text-center" hidden>
+        <div class="max-w-xl rounded-[2rem] border border-amber-300/70 bg-gradient-to-br from-white via-sky-50 to-amber-50 p-7 md:p-12 shadow-2xl">
+            <p class="text-amber-700 font-semibold uppercase tracking-[0.22em] text-xs font-sans mb-4">Sebuah pesan dari Yolanda</p>
+            <h2 class="font-serif text-3xl md:text-5xl text-sky-950 mb-5">Sampai jumpa di hari bahagiamu, Mey 🤍</h2>
+            <p class="font-serif italic text-slate-600 text-lg leading-relaxed mb-8">Terima kasih sudah menjadi bagian yang begitu berharga dalam hidupku. Simpan pesan ini baik-baik, dan melangkahlah menuju hari istimewamu dengan hati yang penuh bahagia. Aku selalu mendoakanmu.</p>
+            <button id="continue-to-invitation" type="button" class="gold-btn rounded-full px-8 py-4 text-sky-950 font-bold shadow-lg">Lanjut ke undangan ✨</button>
+        </div>
+    </div>
+
+    <div id="private-message-gate" class="private-note-layer" role="dialog" aria-modal="true" aria-labelledby="private-gate-title" hidden>
+        <div class="private-note-card rounded-[2rem] p-6 md:p-10 text-center" tabindex="-1">
+            <div class="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full border border-amber-300 bg-white/80 text-2xl shadow-sm" aria-hidden="true">🔐</div>
+            <p class="text-amber-700 font-semibold uppercase tracking-[0.2em] text-[0.65rem] md:text-xs font-sans mb-3">Ruang kecil yang istimewa</p>
+            <h2 id="private-gate-title" class="font-serif text-3xl md:text-4xl text-sky-950 mb-3">Khusus untuk Meisya &amp; Yolanda</h2>
+            <p class="font-sans text-sm md:text-base text-slate-600 leading-relaxed max-w-lg mx-auto mb-7">Ada sepucuk pesan yang ingin kuberikan sebelum undangan ini dibuka. Masukkan panggilan sayang Yolanda untuk membuka kejutan kecil ini.</p>
+            <form id="private-password-form" class="max-w-sm mx-auto">
+                <label for="private-password" class="block text-left text-sky-950 font-semibold font-sans text-sm mb-2">Kata kunci</label>
+                <input id="private-password" type="password" autocomplete="off" required class="w-full px-4 py-3 rounded-xl border-2 border-sky-100 focus:border-amber-400 focus:outline-none bg-white text-sky-950 text-center tracking-[0.25em]" placeholder="Masukkan kata kunci">
+                <p id="private-password-error" class="text-rose-700 text-sm font-medium mt-3" role="alert" hidden>Kata kuncinya belum tepat. Coba ingat panggilan khas Yola ya 🤍</p>
+                <div class="flex flex-col-reverse sm:flex-row justify-center gap-3 mt-6">
+                    <button id="cancel-private-message" type="button" class="rounded-full border border-sky-200 bg-white px-6 py-3 text-slate-600 font-semibold hover:bg-sky-50 transition">Nanti saja</button>
+                    <button type="submit" class="gold-btn rounded-full px-7 py-3 text-sky-950 font-bold shadow-lg">Buka pesan rahasia ✨</button>
+                </div>
+            </form>
+            <p class="text-slate-400 text-[0.65rem] font-sans mt-7">Simpan momen ini untuk Meisya dan Yolanda saja.</p>
+        </div>
+    </div>
+
+    <div id="private-note-layer" class="private-note-layer" role="dialog" aria-modal="true" aria-labelledby="private-note-title" hidden>
+        <div class="private-note-card rounded-[2rem] p-6 md:p-10" tabindex="-1">
+            <audio id="yolanda-private-music" src="aset/sorai.mp3" preload="none" loop></audio>
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+                <p class="text-amber-700 font-semibold uppercase tracking-[0.18em] text-[0.62rem] md:text-xs font-sans">Untuk Meisya, dengan sayang — Yolanda</p>
+                <button id="private-music-toggle" type="button" class="rounded-full border border-sky-200 bg-white/80 px-4 py-2 text-sky-950 text-xs md:text-sm font-semibold transition hover:bg-sky-50" aria-pressed="true">♫ Musik khusus: aktif</button>
+            </div>
+            <h2 id="private-note-title" class="font-serif text-3xl md:text-5xl text-sky-950 leading-tight">Sebelum hari bahagiamu tiba…</h2>
+            <p class="font-serif italic text-slate-600 mt-3 text-base md:text-lg">Ada beberapa hal yang ingin kusampaikan, Mey. Buka satu per satu, pelan-pelan, dengan hati yang lapang.</p>
+            <div class="mt-7 mb-6">
+                <div class="flex justify-between gap-3 text-xs font-sans text-slate-500 mb-2">
+                    <span id="private-progress-label">Perjalanan pesan</span>
+                    <span id="private-progress-count">0 dari 6</span>
+                </div>
+                <div class="private-note-progress" role="progressbar" aria-label="Kemajuan tantangan pesan" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0">
+                    <span id="private-progress-bar"></span>
+                </div>
+            </div>
+
+            <div id="memory-start" class="rounded-2xl border border-amber-200/80 bg-white/65 p-6 md:p-8 text-center">
+                <span class="text-4xl" aria-hidden="true">✉️</span>
+                <p class="font-serif text-xl md:text-2xl text-sky-950 mt-3">Tantangan kecil sebelum surat ini terbuka</p>
+                <p class="font-sans text-sm text-slate-600 leading-relaxed mt-2">Bacalah tiga pesan sampai selesai. Setelah itu, temukan tiga bintang di akhir perjalanan untuk membuka kata perpisahanku.</p>
+                <div class="private-memory-album mt-6 text-left">
+                    <p class="text-center text-amber-700 font-semibold uppercase tracking-[0.18em] text-[0.62rem] font-sans">Album kecil persahabatan</p>
+                    <h3 class="text-center font-serif text-xl md:text-2xl text-sky-950 mt-2 mb-1">Kenangan yang ingin kusimpan 🤍</h3>
+                    <p class="text-center font-sans text-xs text-slate-500 mb-5">Lihat foto atau putar video kenangan sebelum membaca suratnya.</p>
+                    <div class="private-memory-grid">
+                        <figure class="private-memory-frame">
+                            <img class="private-memory-photo" src="aset/sebuah-cerita.jpeg" alt="Kenangan pertama Meisya dan Yolanda" data-memory-placeholder="Foto Meisya &amp; Yolanda 01">
+                            <div class="private-memory-placeholder" hidden><span><span class="block text-2xl mb-2" aria-hidden="true">📷</span>Tambahkan foto<br><strong>aset/yolanda-meisya-1.jpg</strong></span></div>
+                            <figcaption class="private-memory-caption">Sebuah cerita yang selalu kusyukuri</figcaption>
+                        </figure>
+                        <figure class="private-memory-frame">
+                            <img class="private-memory-photo" src="aset/sebuah-cinta.jpeg" alt="Momen kebersamaan Meisya dan Yolanda" data-memory-placeholder="Foto Meisya &amp; Yolanda 02">
+                            <div class="private-memory-placeholder" hidden><span><span class="block text-2xl mb-2" aria-hidden="true">📷</span>Tambahkan foto<br><strong>aset/yolanda-meisya-2.jpg</strong></span></div>
+                            <figcaption class="private-memory-caption">Tawa kecil yang masih kuingat</figcaption>
+                        </figure>
+                        <figure class="private-memory-frame">
+                            <img class="private-memory-photo" src="aset/sebuah-kenangan.jpeg" alt="Potret persahabatan Meisya dan Yolanda" data-memory-placeholder="Foto Meisya &amp; Yolanda 03">
+                            <div class="private-memory-placeholder" hidden><span><span class="block text-2xl mb-2" aria-hidden="true">📷</span>Tambahkan foto<br><strong>aset/yolanda-meisya-3.jpg</strong></span></div>
+                            <figcaption class="private-memory-caption">Sahabat, di setiap bab kehidupan</figcaption>
+                        </figure>
+                        <figure class="private-memory-frame private-memory-video-frame">
+                            <video id="yolanda-memory-video" class="private-memory-video" playsinline preload="metadata" poster="aset/yolanda-meisya-video-cover.jpg" aria-label="Video kenangan Meisya dan Yolanda">
+                                <source src="aset/yolanda-meisya.mp4" type="video/mp4">
+                                Browser ini belum mendukung pemutaran video.
+                            </video>
+                            <div id="yolanda-memory-video-placeholder" class="private-memory-placeholder" hidden>
+                                <span><span class="block text-3xl mb-2" aria-hidden="true">🎞️</span>Tambahkan video kenangan<br><strong>aset/yolanda-meisya.mp4</strong><span class="block text-[.65rem] mt-1">Sampul video: aset/yolanda-meisya-video-cover.jpg</span></span>
+                            </div>
+                            <figcaption class="private-memory-caption">Satu video kecil, untuk merayakan persahabatan kita</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <button id="begin-memory" type="button" class="gold-btn rounded-full px-7 py-3 mt-6 text-sky-950 font-bold shadow-lg">Aku siap membaca 🤍</button>
+            </div>
+
+            <article id="memory-step-1" class="memory-step rounded-2xl border border-amber-200/80 bg-white/70 p-6 md:p-8" hidden>
+                <p class="text-amber-700 uppercase tracking-[0.18em] text-[0.65rem] font-bold font-sans">01 · Tentang perjalananmu</p>
+                <h3 class="font-serif text-2xl md:text-3xl text-sky-950 mt-3">Mey, lihat sejauh apa kamu melangkah.</h3>
+                <p class="font-serif text-slate-600 text-lg leading-relaxed mt-4">Dari semua hari yang kita lewati, hari ini terasa begitu istimewa. Aku bahagia melihatmu sampai di titik ini—siap menyambut kehidupan baru dengan seseorang yang kamu pilih. Semoga kamu selalu ingat betapa berharganya dirimu.</p>
+                <button type="button" class="next-memory gold-btn rounded-full px-6 py-3 mt-6 text-sky-950 font-bold">Simpan pesan ini · lanjut →</button>
+            </article>
+            <article id="memory-step-2" class="memory-step rounded-2xl border border-amber-200/80 bg-white/70 p-6 md:p-8" hidden>
+                <p class="text-amber-700 uppercase tracking-[0.18em] text-[0.65rem] font-bold font-sans">02 · Untuk rumah barumu</p>
+                <h3 class="font-serif text-2xl md:text-3xl text-sky-950 mt-3">Semoga cinta selalu terasa seperti pulang.</h3>
+                <p class="font-serif text-slate-600 text-lg leading-relaxed mt-4">Semoga rumah tanggamu dipenuhi percakapan yang jujur, tawa yang sederhana, dan pelukan yang menenangkan. Saat hari terasa berat, semoga kalian selalu menemukan alasan untuk saling menggenggam dan memilih satu sama lain lagi.</p>
+                <button type="button" class="next-memory gold-btn rounded-full px-6 py-3 mt-6 text-sky-950 font-bold">Simpan pesan ini · lanjut →</button>
+            </article>
+            <article id="memory-step-3" class="memory-step rounded-2xl border border-amber-200/80 bg-white/70 p-6 md:p-8" hidden>
+                <p class="text-amber-700 uppercase tracking-[0.18em] text-[0.65rem] font-bold font-sans">03 · Dari sahabatmu</p>
+                <h3 class="font-serif text-2xl md:text-3xl text-sky-950 mt-3">Jarak dan kesibukan tak mengurangi sayangku.</h3>
+                <p class="font-serif text-slate-600 text-lg leading-relaxed mt-4">Mungkin setelah ini banyak hal berubah, tapi tempatmu sebagai sahabat akan selalu ada. Aku akan tetap menjadi Yolanda yang ikut bahagia untukmu, mendengarkan ceritamu, dan mendoakanmu—di setiap bab baru yang kamu jalani.</p>
+                <button type="button" class="next-memory gold-btn rounded-full px-6 py-3 mt-6 text-sky-950 font-bold">Simpan pesan ini · lanjut →</button>
+            </article>
+
+            <div id="memory-final-challenge" class="rounded-2xl border border-amber-200/80 bg-white/70 p-6 md:p-8 text-center" hidden>
+                <p class="text-amber-700 uppercase tracking-[0.18em] text-[0.65rem] font-bold font-sans">Tantangan terakhir</p>
+                <h3 class="font-serif text-2xl md:text-3xl text-sky-950 mt-3">Temukan tiga bintang, lalu simpan satu doa.</h3>
+                <p id="star-challenge-prompt" class="font-sans text-slate-600 mt-3">Ketuk tiga bintang di bawah ini satu per satu ✨</p>
+                <div class="flex justify-center gap-4 my-6">
+                    <button type="button" class="memory-challenge-star" aria-label="Temukan bintang pertama" aria-pressed="false">✦</button>
+                    <button type="button" class="memory-challenge-star" aria-label="Temukan bintang kedua" aria-pressed="false">✦</button>
+                    <button type="button" class="memory-challenge-star" aria-label="Temukan bintang ketiga" aria-pressed="false">✦</button>
+                </div>
+                <label for="final-wish" class="block text-left text-sky-950 font-semibold font-sans text-sm mb-2">Doa kecil untuk Keluarga Kecilmu</label>
+                <textarea id="final-wish" rows="2" maxlength="240" class="w-full rounded-xl border-2 border-sky-100 bg-white px-4 py-3 text-slate-700 focus:border-amber-400 focus:outline-none resize-y" placeholder="Semoga hari-harimu selalu..."></textarea>
+                <p id="final-challenge-hint" class="text-slate-500 text-xs font-sans mt-3" aria-live="polite">Bintang terkumpul: 0 dari 3. Tulis satu doa, lalu pesan perpisahan akan terbuka.</p>
+                <button id="finish-private-message" type="button" class="gold-btn rounded-full px-7 py-3 mt-5 text-sky-950 font-bold shadow-lg opacity-50 cursor-not-allowed" disabled>Buka pesan perpisahan 💌</button>
+            </div>
+            <div id="private-letter-finale" class="rounded-2xl border border-amber-200/80 bg-white/75 p-6 md:p-9 text-center" hidden>
+                <span class="text-4xl" aria-hidden="true">🤍</span>
+                <p class="text-amber-700 uppercase tracking-[0.18em] text-[0.65rem] font-bold font-sans mt-4">Surat kecil dari Yolanda</p>
+                <h3 class="font-serif text-2xl md:text-3xl text-sky-950 mt-3">Mey, aku bangga dan bahagia untukmu.</h3>
+                <p class="font-serif text-slate-600 text-lg leading-relaxed mt-4">Terima kasih sudah menjadi rumah bagi banyak cerita dan tawa. Hari ini aku melepasmu menuju babak baru, bukan menjauh—aku tetap ada, selalu menyayangimu, dan akan selalu mendoakan kebahagiaanmu. Selamat menempuh hidup baru, sahabatku. Dengan sayang, Yola.</p>
+                <p id="final-wish-kept" class="font-serif italic text-amber-800 text-base mt-5"></p>
+                <button id="close-private-message" type="button" class="gold-btn rounded-full px-7 py-3 mt-7 text-sky-950 font-bold shadow-lg">Tutup surat &amp; lanjut ke undangan ✨</button>
+            </div>
+            <div class="mt-7 text-center">
+                <p id="private-music-status" class="text-slate-400 text-[0.65rem] font-sans" aria-live="polite">Lagu Sorai menemani pesan khusus dari Yolanda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content wrapper -->
+    <main id="main-content" class="hidden flex-col items-center w-full">
+        <header class="invitation-header">
+            <p class="invitation-header-label">The Queen Bouquet · Wedding Invitation</p>
+        </header>
+        
+        <!-- S1: Hero Section -->
+        <section class="w-full min-h-screen flex flex-col justify-center items-center text-center py-20 px-4 bg-white relative reveal premium-texture gold-sparkle">
+            <div class="relative z-10 max-w-5xl">
+                <figure class="hero-photo-frame">
+                    <video src="aset/hero-video.mp4" poster="aset/hero.jpeg" autoplay muted loop playsinline preload="metadata" aria-label="Video Yolanda dan Meisya" class="h-full w-full object-cover object-center"></video>
+                </figure>
+                <p class="text-sky-800 tracking-[0.24em] uppercase text-xs md:text-sm font-semibold mb-6 font-sans">Dengan penuh syukur dan cinta, kami mengundang</p>
+                <h2 class="text-6xl md:text-9xl font-cursive text-navy mb-8">Meisya <span class="gold-text text-5xl md:text-8xl">&</span> Kholiliy</h2>
+                <p class="text-lg md:text-xl text-slate-600 font-serif italic mb-7">untuk menjadi bagian dari hari ketika dua perjalanan menyatu dalam satu janji.</p>
+                <p class="text-2xl md:text-3xl text-navy font-semibold mb-8 font-serif">Selasa, 13 Oktober 2026</p>
+                <button id="bouquet-philosophy-open" type="button" class="inline-flex items-center justify-center gap-2 rounded-full border border-amber-400/70 bg-white/85 px-7 py-3 text-sky-950 font-semibold font-sans shadow-lg transition hover:-translate-y-1 hover:shadow-xl" aria-haspopup="dialog" aria-controls="bouquet-philosophy-dialog">
+                    ✿ Kenali Filosofi Bouquet
+                </button>
+                <div class="mt-4">
+                    <a id="event-details-continue" href="#event-details" class="hidden inline-flex items-center gap-2 px-7 py-3 rounded-full border border-amber-400/70 text-sky-950 bg-white/80 backdrop-blur font-medium font-sans shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
+                        Membuka acara undangan <span aria-hidden="true">↓</span>
+                    </a>
+                </div>
+                <div class="mt-4">
+                    <button type="button" class="private-message-trigger inline-flex items-center justify-center gap-2 rounded-full border border-amber-400/70 bg-white/80 backdrop-blur px-6 py-3 text-sky-950 text-sm font-semibold shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
+                        💌 Pesan untuk Meisya dari Yolanda
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- S2: Holy Matrimony Quote -->
+        <section class="w-full py-24 px-6 bg-slate-50 text-center border-y border-slate-200 reveal">
+            <div class="max-w-3xl mx-auto">
+                <svg class="w-12 h-12 mx-auto text-gold mb-6 opacity-50" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <p class="text-2xl md:text-3xl font-serif text-navy leading-relaxed italic">
+                    “Semoga langkah yang kami pilih hari ini menjadi awal dari rumah yang selalu dipenuhi kasih, ketenangan, dan syukur.”
+                </p>
+                <p class="mt-8 text-amber-700 font-semibold tracking-[0.16em] uppercase font-sans text-xs md:text-sm">Sebuah doa untuk perjalanan seumur hidup</p>
+            </div>
+        </section>
+
+        <!-- S3: The Main Characters -->
+        <section class="w-full py-28 px-4 bg-white reveal premium-texture">
+            <div class="max-w-5xl mx-auto text-center">
+                <p class="text-sky-800 font-semibold uppercase tracking-[0.2em] text-xs font-sans mb-3">Dua pribadi, satu tujuan</p>
+                <h3 class="text-4xl md:text-5xl font-serif text-navy mb-6">Dengan penuh cinta, kami</h3>
+                <p class="text-slate-600 font-sans max-w-2xl mx-auto mb-14">Hari istimewa ini terasa lebih berarti karena doa dan kehadiran orang-orang terkasih.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-16">
+                    <div class="text-center group">
+                        <div class="w-56 h-56 sm:w-64 sm:h-64 mx-auto mb-6 premium-frame profile-frame transition-transform duration-500 group-hover:scale-105">
+                            <img src="aset/meisya.jpeg" alt="Meisya" onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80'" class="rounded-full !aspect-square">
+                        </div>
+                        <h4 class="text-4xl font-cursive text-navy">Meisya Nova Elmira</h4>
+                        <p class="text-amber-700 text-sm mt-3 font-semibold uppercase tracking-widest font-sans">Putri dari keluarga tercinta</p>
+                    </div>
+                    <div class="text-7xl text-amber-400 font-cursive opacity-50">&</div>
+                    <div class="text-center group">
+                        <div class="w-56 h-56 sm:w-64 sm:h-64 mx-auto mb-6 premium-frame profile-frame transition-transform duration-500 group-hover:scale-105">
+                            <img src="aset/kholiliy.jpeg" alt="Kholiliy" onerror="this.src='https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80'" class="rounded-full !aspect-square">
+                        </div>
+                        <h4 class="text-4xl font-cursive text-navy">Kholiliy</h4>
+                        <p class="text-amber-700 text-sm mt-3 font-semibold uppercase tracking-widest font-sans">Putra dari keluarga tercinta</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S4: Bestie Squad (NEW) -->
+        <section class="w-full py-24 px-4 bg-slate-50 border-t border-slate-200 reveal">
+            <div class="max-w-6xl mx-auto text-center">
+                <h3 class="text-4xl font-serif text-navy mb-4">Circle Paling Berisik 👯‍♀️</h3>
+                <p class="text-slate-500 font-sans mb-16">Tanpa mereka, nikahan ini kurang huru-hara.</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <!-- Dummy Squad -->
+                    <div>
+                        <div class="bestie-portrait-frame">
+                            <img src="aset/yolanda-deva-apriliana-putri.jpeg" onerror="this.src='https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&q=80'" class="rounded-full object-cover" alt="Yolanda">
+                        </div>
+                        <p class="font-serif font-bold text-navy">Yolanda</p>
+                        <p class="text-xs font-sans text-slate-500">Chief of Ghibah</p>
+                    </div>
+                    <div>
+                        <div class="bestie-portrait-frame">
+                            <img src="aset/risma.jpeg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80'" class="rounded-full object-cover" alt="Risma">
+                        </div>
+                        <p class="font-serif font-bold text-navy">Risma</p>
+                        <p class="text-xs font-sans text-slate-500">Tukang Telat</p>
+                    </div>
+                    <div>
+                        <div class="bestie-portrait-frame">
+                            <img src="aset/dista.jpeg" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80'" class="rounded-full object-cover" alt="Dista">
+                        </div>
+                        <p class="font-serif font-bold text-navy">Dista</p>
+                        <p class="text-xs font-sans text-slate-500">Keamanan Makanan</p>
+                    </div>
+                    <div>
+                        <div class="bestie-portrait-frame">
+                            <img src="aset/nindi.jpeg" onerror="this.src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80'" class="rounded-full object-cover" alt="Nindi">
+                        </div>
+                        <p class="font-serif font-bold text-navy">Nindi</p>
+                        <p class="text-xs font-sans text-slate-500">Seksi Sibuk</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S5: Love Story Timeline -->
+        <section class="w-full py-24 px-4 bg-white reveal premium-texture">
+            <div class="max-w-3xl mx-auto">
+                <p class="text-center text-sky-800 font-semibold uppercase tracking-[0.2em] text-xs font-sans mb-3">The story of us</p>
+                <h3 class="text-4xl md:text-5xl font-serif text-navy text-center mb-16">Dari Pertemuan Menjadi Selamanya</h3>
+                <div class="space-y-10 border-l-2 border-amber-300 ml-4 md:ml-12 pl-7 md:pl-12 relative">
+                    <div class="relative reveal">
+                        <div class="absolute -left-[42px] md:-left-[58px] top-0 w-8 h-8 bg-navy rounded-full border-4 border-gold shadow-lg flex items-center justify-center text-gold text-xs font-bold font-sans">1</div>
+                        <h4 class="text-2xl font-serif text-navy">Sebuah Sapaan Pertama</h4>
+                        <p class="text-amber-700 text-sm font-semibold mt-1 font-sans">2020 · Kampus</p>
+                        <p class="text-slate-600 mt-3 font-sans leading-relaxed">Di antara hari-hari biasa, sebuah pertemuan sederhana membuka cerita yang tak pernah kami sangka akan sejauh ini.</p>
+                    </div>
+                    <div class="relative reveal">
+                        <div class="absolute -left-[42px] md:-left-[58px] top-0 w-8 h-8 bg-navy rounded-full border-4 border-gold shadow-lg flex items-center justify-center text-gold text-xs font-bold font-sans">2</div>
+                        <h4 class="text-2xl font-serif text-navy">Tumbuh dalam Cerita</h4>
+                        <p class="text-amber-700 text-sm font-semibold mt-1 font-sans">2021–2024</p>
+                        <p class="text-slate-600 mt-3 font-sans leading-relaxed">Percakapan menjadi perhatian, perhatian tumbuh menjadi kepercayaan. Bersama, kami belajar bahwa cinta hadir dalam kesediaan untuk terus memilih satu sama lain.</p>
+                    </div>
+                    <div class="relative reveal">
+                        <div class="absolute -left-[42px] md:-left-[58px] top-0 w-8 h-8 bg-gold rounded-full border-4 border-white shadow-[0_0_15px_#FBBF24]"></div>
+                        <h4 class="text-3xl font-serif text-amber-700">Satu Janji, Selamanya 💍</h4>
+                        <p class="text-navy text-sm font-semibold mt-1 font-sans">2025 · Lamaran</p>
+                        <p class="text-slate-600 mt-3 font-sans leading-relaxed">Dengan restu keluarga dan doa orang-orang terkasih, kami melangkah menuju babak baru—membangun rumah dan masa depan bersama.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S6: Pre-Wed Teaser (NEW) -->
+        <section class="w-full py-24 px-4 bg-navy relative text-center reveal overflow-hidden premium-texture gold-sparkle">
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <h3 class="text-4xl font-serif gold-text mb-6">Spill Dikit Aja...</h3>
+                <p class="text-slate-300 font-sans mb-12">Biar pada penasaran gimana aesthetic-nya kita pre-wed.</p>
+                <div class="aspect-[21/9] bg-slate-800 rounded-2xl border-4 border-gold overflow-hidden shadow-2xl relative group">
+                    <img src="aset/prewedding.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=80'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy to-transparent opacity-60"></div>
+                    <h4 class="absolute bottom-6 w-full text-center font-cursive text-5xl gold-text">Coming Soon</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- S7: 3D Video Gate -->
+        <section class="w-full py-32 px-4 bg-slate-900 relative reveal">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16 relative z-10">
+                    <h3 class="text-4xl md:text-5xl font-serif gold-text mb-4">POV: Bestie Lu Sold Out 🎥</h3>
+                    <p class="text-slate-300 font-sans">Pencet gerbangnya buat liat aib dan momen aesthetic mereka!</p>
+                </div>
+                
+                <div class="relative w-full aspect-video bg-black rounded-xl shadow-[0_0_60px_rgba(251,191,36,0.3)] border-4 border-gold overflow-hidden flex items-center justify-center">
+                    <video id="bestie-video" class="w-full h-full object-cover" controls>
+                        <source src="aset/wedding-meisya.mp4" type="video/mp4">
+                    </video>
+                    
+                    <!-- Gates -->
+                    <div id="gate-container" class="absolute inset-0 flex z-10 cursor-pointer" onclick="openGate()">
+                        <!-- Left Gate -->
+                        <div id="gate-left" class="gate gate-left w-1/2 h-full bg-slate-100 bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] border-r-2 border-gold flex items-center justify-end pr-4 shadow-[5px_0_20px_rgba(0,0,0,0.7)] relative">
+                             <div class="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 border-4 border-navy absolute -right-8 z-20 shadow-xl flex items-center justify-center">
+                                 <div class="w-8 h-8 rounded-full bg-navy border border-gold"></div>
+                             </div>
+                        </div>
+                        <!-- Right Gate -->
+                        <div id="gate-right" class="gate gate-right w-1/2 h-full bg-slate-100 bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] border-l-2 border-gold flex items-center justify-start pl-4 shadow-[-5px_0_20px_rgba(0,0,0,0.7)] relative">
+                            <span class="absolute top-1/2 -translate-y-1/2 -left-24 text-navy font-bold tracking-[0.3em] uppercase text-sm animate-pulse w-48 text-center pointer-events-none font-sans bg-white/80 py-2 rounded-full border border-gold backdrop-blur">Tap to Open</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S8: Countdown Timer -->
+        <section class="w-full py-24 px-4 bg-navy relative overflow-hidden reveal border-y border-gold/30 gold-sparkle premium-texture">
+            <div class="relative z-10 max-w-4xl mx-auto text-center">
+                <p class="text-blue-100/80 font-sans uppercase tracking-[0.2em] text-xs mb-3">Simpan tanggalnya</p>
+                <h3 class="text-3xl md:text-4xl font-serif gold-text mb-12">Menuju Hari yang Kami Nantikan</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 justify-center gap-4 md:gap-10 text-white font-sans">
+                    <div class="bg-navy/80 border border-gold/50 p-4 md:p-6 rounded-2xl backdrop-blur">
+                        <div id="days" class="text-4xl md:text-6xl font-serif font-bold text-gold">00</div>
+                        <div class="text-xs md:text-sm uppercase tracking-widest mt-2">Hari</div>
+                    </div>
+                    <div class="bg-navy/80 border border-gold/50 p-4 md:p-6 rounded-2xl backdrop-blur">
+                        <div id="hours" class="text-4xl md:text-6xl font-serif font-bold text-gold">00</div>
+                        <div class="text-xs md:text-sm uppercase tracking-widest mt-2">Jam</div>
+                    </div>
+                    <div class="bg-navy/80 border border-gold/50 p-4 md:p-6 rounded-2xl backdrop-blur">
+                        <div id="minutes" class="text-4xl md:text-6xl font-serif font-bold text-gold">00</div>
+                        <div class="text-xs md:text-sm uppercase tracking-widest mt-2">Menit</div>
+                    </div>
+                    <div class="bg-navy/80 border border-gold/50 p-4 md:p-6 rounded-2xl backdrop-blur">
+                        <div id="seconds" class="text-4xl md:text-6xl font-serif font-bold text-gold">00</div>
+                        <div class="text-xs md:text-sm uppercase tracking-widest mt-2">Detik</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S8.5: Wedding Day Timeline -->
+        <section class="w-full py-24 px-4 bg-amber-50 relative reveal border-y border-amber-200">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-14">
+                    <p class="text-amber-700 font-bold uppercase tracking-[0.25em] text-xs font-sans mb-3">Save the moments</p>
+                    <h3 class="text-3xl md:text-5xl font-serif text-navy">Rundown Hari Bahagia 🕰️</h3>
+                    <p class="text-slate-600 font-sans mt-4 max-w-xl mx-auto">Kami menantikan kesempatan untuk merayakan hari istimewa ini bersama Anda.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="bg-white p-6 rounded-2xl border border-amber-200 shadow-sm text-center">
+                        <span class="inline-flex w-12 h-12 items-center justify-center rounded-full bg-navy text-gold font-serif text-xl mb-4">01</span>
+                        <p class="text-amber-700 font-bold font-sans text-sm">08.00 WIB</p>
+                        <h4 class="text-xl font-serif text-navy mt-2">Akad Nikah</h4>
+                        <p class="text-slate-500 text-sm font-sans mt-2">Masjid Agung Kota Malang</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-amber-200 shadow-sm text-center">
+                        <span class="inline-flex w-12 h-12 items-center justify-center rounded-full bg-navy text-gold font-serif text-xl mb-4">02</span>
+                        <p class="text-amber-700 font-bold font-sans text-sm">11.00 WIB</p>
+                        <h4 class="text-xl font-serif text-navy mt-2">Resepsi</h4>
+                        <p class="text-slate-500 text-sm font-sans mt-2">Grand Ballroom Hotel Malang</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-amber-200 shadow-sm text-center">
+                        <span class="inline-flex w-12 h-12 items-center justify-center rounded-full bg-navy text-gold font-serif text-xl mb-4">03</span>
+                        <p class="text-amber-700 font-bold font-sans text-sm">Saat resepsi</p>
+                        <h4 class="text-xl font-serif text-navy mt-2">Salam &amp; Foto</h4>
+                        <p class="text-slate-500 text-sm font-sans mt-2">Siapkan senyum terbaikmu 📸</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-amber-200 shadow-sm text-center">
+                        <span class="inline-flex w-12 h-12 items-center justify-center rounded-full bg-navy text-gold font-serif text-xl mb-4">04</span>
+                        <p class="text-amber-700 font-bold font-sans text-sm">Jangan lupa</p>
+                        <h4 class="text-xl font-serif text-navy mt-2">Isi Guestbook</h4>
+                        <p class="text-slate-500 text-sm font-sans mt-2">Tinggalkan doa untuk pengantin 💌</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S9 & S10: Event Details & Location -->
+        <section id="event-details" class="w-full py-28 px-4 bg-white relative reveal premium-texture">
+            <div class="max-w-6xl mx-auto">
+                <p class="text-center text-sky-800 font-semibold uppercase tracking-[0.2em] text-xs font-sans mb-3">Save the date</p>
+                <h3 class="text-4xl md:text-5xl font-serif text-navy text-center mb-5">Hari yang Kami Nantikan</h3>
+                <p class="text-center text-slate-600 font-sans mb-14 max-w-2xl mx-auto">Dengan hangat, kami mengundang Anda untuk hadir dan menjadi saksi awal perjalanan baru kami.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    
+                    <!-- Akad -->
+                    <div class="bg-slate-50 p-10 rounded-[2rem] text-center border border-slate-200 shadow-xl relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-sky-200 via-amber-300 to-sky-200"></div>
+                        <svg class="w-16 h-16 mx-auto text-amber-500 mb-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        <h4 class="text-4xl font-cursive text-navy mb-4">Akad Nikah</h4>
+                        <p class="text-navy font-semibold font-sans text-lg mb-2">Selasa, 13 Oktober 2026</p>
+                        <p class="text-slate-600 font-sans mb-8">08.00 WIB - Selesai<br>Masjid Agung Kota Malang</p>
+                        <a href="https://maps.google.com" target="_blank" class="inline-block gold-btn px-8 py-3 rounded-full text-navy font-bold text-sm font-sans uppercase tracking-widest">Buka Google Maps</a>
+                    </div>
+                    
+                    <!-- Resepsi -->
+                    <div class="bg-slate-50 p-10 rounded-[2rem] text-center border border-slate-200 shadow-xl relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-sky-200 via-amber-300 to-sky-200"></div>
+                        <svg class="w-16 h-16 mx-auto text-amber-500 mb-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><path d="M12 13a3 3 0 100-6 3 3 0 000 6z"/></svg>
+                        <h4 class="text-4xl font-cursive text-navy mb-4">Resepsi</h4>
+                        <p class="text-navy font-semibold font-sans text-lg mb-2">Selasa, 13 Oktober 2026</p>
+                        <p class="text-slate-600 font-sans mb-8">11.00 WIB - Selesai<br>Grand Ballroom Hotel Malang</p>
+                        <a href="https://maps.google.com" target="_blank" class="inline-block gold-btn px-8 py-3 rounded-full text-navy font-bold text-sm font-sans uppercase tracking-widest">Buka Google Maps</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- S11: Guest Arrival Guide -->
+        <section class="w-full py-24 px-4 bg-slate-50 text-center reveal border-y border-slate-200">
+            <div class="max-w-5xl mx-auto">
+                <p class="text-amber-700 font-bold uppercase tracking-[0.25em] text-xs font-sans mb-3">A little note for our guests</p>
+                <h3 class="text-4xl font-serif text-navy mb-4">Catatan Hari Bahagia ✨</h3>
+                <p class="text-slate-600 font-sans mb-10 max-w-2xl mx-auto">Beberapa hal kecil agar kamu bisa menikmati setiap momen bersama kami.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+                    <article class="bg-white p-6 md:p-7 rounded-2xl border border-amber-200 shadow-sm">
+                        <span class="inline-flex w-11 h-11 items-center justify-center rounded-full bg-amber-100 text-amber-800 text-xl" aria-hidden="true">🕰️</span>
+                        <h4 class="font-serif font-bold text-navy text-xl mt-4">Atur waktu kedatangan</h4>
+                        <p class="text-slate-600 font-sans text-sm leading-relaxed mt-2">Akad dimulai pukul 08.00 WIB dan resepsi pukul 11.00 WIB. Sampai jumpa di sana!</p>
+                    </article>
+                    <article class="bg-white p-6 md:p-7 rounded-2xl border border-amber-200 shadow-sm">
+                        <span class="inline-flex w-11 h-11 items-center justify-center rounded-full bg-amber-100 text-amber-800 text-xl" aria-hidden="true">📍</span>
+                        <h4 class="font-serif font-bold text-navy text-xl mt-4">Simpan detail lokasi</h4>
+                        <p class="text-slate-600 font-sans text-sm leading-relaxed mt-2">Detail lokasi akad dan resepsi tersedia di bagian acara agar mudah kamu temukan.</p>
+                    </article>
+                    <article class="bg-white p-6 md:p-7 rounded-2xl border border-amber-200 shadow-sm">
+                        <span class="inline-flex w-11 h-11 items-center justify-center rounded-full bg-amber-100 text-amber-800 text-xl" aria-hidden="true">💌</span>
+                        <h4 class="font-serif font-bold text-navy text-xl mt-4">Tinggalkan doa</h4>
+                        <p class="text-slate-600 font-sans text-sm leading-relaxed mt-2">Isi RSVP dan tulis ucapan untuk kami. Pesanmu akan tampil di guestbook.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- S12: Wedding Rules -->
+        <section class="w-full py-28 px-4 bg-white relative reveal">
+            <div class="max-w-5xl mx-auto">
+                <h3 class="text-4xl md:text-5xl font-serif text-navy text-center mb-16">Wedding Rules ⚠️</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 font-sans">
+                    <div class="bg-green-50 p-10 rounded-[2rem] shadow-sm border border-green-200 hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center text-green-700 text-3xl mb-6 font-bold">✓</div>
+                        <h4 class="font-bold text-green-800 mb-6 text-2xl font-serif">Do's (Wajib!)</h4>
+                        <ul class="list-none space-y-4 text-slate-700">
+                            <li class="flex items-center gap-3"><span class="text-green-500">✔</span> Wajib style badai & wangi.</li>
+                            <li class="flex items-center gap-3"><span class="text-green-500">✔</span> Bikin IG Story & tag pengantin.</li>
+                            <li class="flex items-center gap-3"><span class="text-green-500">✔</span> Makan yang banyak sampai kenyang.</li>
+                            <li class="flex items-center gap-3"><span class="text-green-500">✔</span> Bawa senyum paling manis.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 p-10 rounded-[2rem] shadow-sm border border-red-200 hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-red-200 rounded-full flex items-center justify-center text-red-700 text-3xl mb-6 font-bold">✗</div>
+                        <h4 class="font-bold text-red-800 mb-6 text-2xl font-serif">Don'ts (Awas lu!)</h4>
+                        <ul class="list-none space-y-4 text-slate-700">
+                            <li class="flex items-center gap-3"><span class="text-red-500">✖</span> Dilarang keras bawa mantan.</li>
+                            <li class="flex items-center gap-3"><span class="text-red-500">✖</span> Baju ga boleh lebih heboh dari pengantin.</li>
+                            <li class="flex items-center gap-3"><span class="text-red-500">✖</span> Pulang sebelum foto bareng.</li>
+                            <li class="flex items-center gap-3"><span class="text-red-500">✖</span> Nanya "kapan nyusul" ke tamu jomblo.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S13: Q&A (FAQ) (NEW) -->
+        <section class="w-full py-20 px-4 bg-navy text-white reveal border-t border-gold/20 relative overflow-hidden premium-texture">
+            <div class="absolute right-0 top-0 opacity-20 w-72 h-72 rounded-full mix-blend-overlay pointer-events-none" style="background:radial-gradient(circle, rgba(210,231,242,.85), rgba(129,175,199,.18) 48%, transparent 72%)"></div>
+            <div class="max-w-3xl mx-auto relative z-10">
+                <h3 class="text-4xl font-serif gold-text text-center mb-12">Yang Sering Ditanyain (FAQ)</h3>
+                <div class="space-y-6">
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 backdrop-blur">
+                        <p class="font-serif font-bold text-lg text-gold">Q: Boleh bawa plus one (gandengan) nggak?</p>
+                        <p class="font-sans text-sm mt-2 text-slate-300">A: Boleh banget dong! Asal jangan bawa mantan yang belum move on aja ya, bahaya ntar ada drama.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 backdrop-blur">
+                        <p class="font-serif font-bold text-lg text-gold">Q: Parkirannya aman bestie?</p>
+                        <p class="font-sans text-sm mt-2 text-slate-300">A: Aman sentosa! Luas banget muat buat kapal berlabuh.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S14: IG Filter Check (NEW) -->
+        <section class="w-full py-24 px-4 bg-amber-50 text-center reveal border-y border-amber-200">
+            <h3 class="text-4xl font-serif text-navy mb-4">Instagram Filter ✨</h3>
+            <p class="text-slate-600 font-sans mb-10 max-w-xl mx-auto">Jangan lupa pakai filter spesial kita biar ig story kalian se-aesthetic pinterest!</p>
+            <div class="w-32 h-32 mx-auto bg-white rounded-3xl shadow-lg border-2 border-gold flex items-center justify-center mb-8 hover:rotate-6 transition-transform cursor-pointer">
+                <!-- IG Icon outline -->
+                <svg class="w-16 h-16 text-pink-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <a href="https://www.instagram.com/yolcile?xtok=cjloYXpkdG81cTln" class="gold-btn px-8 py-3 rounded-full text-navy font-bold text-sm font-sans uppercase tracking-widest">Foto terbaikmu - Tag Aku</a>
+        </section>
+
+        <!-- S15: Aesthetic Gallery -->
+        <section class="w-full py-28 px-4 bg-slate-50 reveal premium-texture">
+            <div class="max-w-6xl mx-auto text-center">
+                <p class="text-sky-800 font-semibold uppercase tracking-[0.2em] text-xs font-sans mb-3">Potongan cerita kami</p>
+                <h3 class="text-4xl md:text-5xl font-serif text-navy mb-4">Galeri Eksklusif ✨</h3>
+                <p class="text-slate-600 font-sans max-w-2xl mx-auto mb-14">Satu per satu kenangan kecil yang membawa kami sampai ke hari ini. Ketuk foto untuk melihatnya lebih dekat.</p>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="premium-frame shadow-xl group hover:scale-105 transition-transform"><img src="aset/kenangan-terakhir.jpeg" onerror="this.src='https://images.unsplash.com/photo-1511895426328-dc8714191300?w=500&q=80'" alt="Kenangan terakhir Meisya dan Yolanda"></div>
+                    <div class="premium-frame shadow-xl group hover:scale-105 transition-transform"><img src="Aset/galeri2.jpg" onerror="this.src='https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500&q=80'" alt="Momen kebersamaan Meisya dan Kholiliy"></div>
+                    <div class="premium-frame shadow-xl group hover:scale-105 transition-transform"><img src="Aset/galeri3.jpg" onerror="this.src='https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=500&q=80'" alt="Potret perjalanan cinta Meisya dan Kholiliy"></div>
+                    <div class="premium-frame shadow-xl group hover:scale-105 transition-transform"><img src="aset/ngedate.jpeg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500&q=80'" alt="Potret menjelang ngedate dengan Kholily"></div>
+                    <!-- Additional Photos -->
+                    <div class="premium-frame shadow-xl group hover:scale-105 transition-transform"><img src="aset/kenangan-istimewa.jpeg" onerror="this.src='https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500&q=80'" alt="Kenangan istimewa dalam perjalanan kami"></div>
+                    <div class="premium-frame shadow-xl group hover:scale-105 transition-transform"><img src="Aset/galeri6.jpg" onerror="this.src='https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=500&q=80'" alt="Momen penuh kebahagiaan bersama"></div>
+                    <div class="premium-frame shadow-xl group hover:scale-105 transition-transform"><img src="Aset/galeri7.jpg" onerror="this.src='https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=500&q=80'" alt="Senyum dalam cerita Meisya dan Kholiliy"></div>
+                    <div class="premium-frame shadow-xl group hover:scale-105 transition-transform"><img src="aset/menyambut-bahagia.jpeg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500&q=80'" alt="Bersama Yolanda di hari bahagia"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S16: Live Streaming -->
+        <section class="w-full py-24 px-4 bg-white text-center reveal border-y border-slate-200">
+            <h3 class="text-4xl font-serif text-navy mb-4">Kaum Rebahan Tetap Kondangan 🎥</h3>
+            <p class="text-slate-600 font-sans max-w-xl mx-auto mb-10">Buat yang jauh di mata tapi dekat di doa, kalian tetep bisa nyaksiin kita sah lewat live streaming!</p>
+            <a href="#" class="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full transition-colors font-sans shadow-lg hover:shadow-red-600/50">
+                <svg class="w-6 h-6 fill-current animate-pulse" viewBox="0 0 24 24"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.86-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"/></svg>
+                Tonton Live YouTube
+            </a>
+        </section>
+
+        <!-- S17: Digital Gift / Amplop -->
+        <section class="w-full py-28 px-4 bg-navy text-center reveal relative">
+            <div class="relative z-10">
+                <h3 class="text-4xl font-serif gold-text mb-4">Modal Honeymoon 🎁</h3>
+                <p class="text-slate-300 font-sans mb-12 max-w-xl mx-auto leading-relaxed">Buat bestie yang mau ngasih kado atau nyumbang tiket pesawat buat Meisya & Kholiliy healing, bisa transfer ke sini ya!</p>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-8">
+                    <!-- Bank BCA -->
+                    <div class="w-full max-w-sm mx-auto md:mx-0 bg-slate-50 p-8 rounded-3xl shadow-xl border-4 border-gold relative overflow-hidden text-left">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="font-bold text-navy font-serif text-2xl">BCA</span>
+                            <div class="w-12 h-8 bg-blue-600 rounded"></div>
+                        </div>
+                        <p class="text-3xl tracking-widest font-sans font-bold text-slate-700 mb-2" id="rek-bca">1234567890</p>
+                        <p class="text-sm text-slate-500 mb-8 font-sans">a.n. Meisya Nova Elmira</p>
+                        <button class="w-full gold-btn py-3 rounded-xl text-navy font-bold font-sans uppercase tracking-widest text-sm" onclick="copyToClipboard('1234567890')">Copy Rekening</button>
+                    </div>
+
+                    <!-- E-Wallet -->
+                    <div class="w-full max-w-sm mx-auto md:mx-0 bg-slate-50 p-8 rounded-3xl shadow-xl border-4 border-gold relative overflow-hidden text-left">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="font-bold text-navy font-serif text-2xl">DANA</span>
+                            <div class="w-12 h-8 bg-purple-600 rounded"></div>
+                        </div>
+                        <p class="text-3xl tracking-widest font-sans font-bold text-slate-700 mb-2" id="rek-dana">088216927125</p>
+                        <p class="text-sm text-slate-500 mb-8 font-sans">a.n. Kholiliy</p>
+                        <button class="w-full gold-btn py-3 rounded-xl text-navy font-bold font-sans uppercase tracking-widest text-sm" onclick="copyToClipboard('088216927125')">Copy Nomor</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S19: The Bestie's Letter -->
+        <section class="w-full py-28 px-4 bg-white relative reveal premium-texture">
+            <div class="max-w-4xl mx-auto bg-white/75 backdrop-blur-sm p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[3rem] border border-amber-300/70 shadow-2xl relative text-center message-frame">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white p-4 rounded-full border border-slate-200 shadow-lg">
+                    <span class="text-4xl">💌</span>
+                </div>
+                <p class="text-amber-700 font-semibold uppercase tracking-[0.2em] text-xs font-sans mb-3 mt-4">Untuk dua sahabat saja</p>
+                <h3 class="text-3xl md:text-4xl font-serif text-navy mb-4">Ada surat kecil yang menunggumu, Mey 🤍</h3>
+                <p class="text-slate-600 font-sans leading-relaxed max-w-2xl mx-auto mb-7">Beberapa kata dari Yolanda yang tersimpan di ruang khusus—bersama kenangan, tantangan kecil, dan doa yang ingin kamu bawa ke babak baru.</p>
+                <button type="button" class="private-message-trigger gold-btn rounded-full px-7 py-3 text-sky-950 font-bold shadow-lg">Buka ruang khusus Meisya &amp; Yolanda 💌</button>
+            </div>
+        </section>
+
+        <!-- S20: Guestbook Prompt Cards -->
+        <section class="w-full py-20 px-4 bg-white reveal">
+            <div class="max-w-5xl mx-auto text-center">
+                <p class="text-amber-700 font-bold uppercase tracking-[0.25em] text-xs font-sans mb-3">Leave a little love</p>
+                <h3 class="text-3xl md:text-4xl font-serif text-navy mb-4">Kapsul Waktu untuk Pengantin 💌</h3>
+                <p class="text-slate-600 font-sans max-w-2xl mx-auto mb-10">Pilih inspirasi ucapan, lalu lengkapi dengan kata-katamu sendiri di form RSVP.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+                    <button type="button" data-prompt="Doa kecilku untuk kalian berdua: " onclick="chooseWishPrompt(this.dataset.prompt)" class="p-6 rounded-2xl bg-amber-50 border border-amber-200 hover:border-amber-400 hover:shadow-lg transition text-left">
+                        <span class="text-2xl" aria-hidden="true">🌱</span>
+                        <span class="block font-serif text-navy text-lg font-bold mt-3">Doa untuk masa depan</span>
+                        <span class="block text-slate-600 text-sm font-sans mt-2">Tulis harapan baikmu untuk perjalanan mereka.</span>
+                    </button>
+                    <button type="button" data-prompt="Momen favoritku bersama kalian adalah " onclick="chooseWishPrompt(this.dataset.prompt)" class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-400 hover:shadow-lg transition text-left">
+                        <span class="text-2xl" aria-hidden="true">📸</span>
+                        <span class="block font-serif text-navy text-lg font-bold mt-3">Kenangan paling seru</span>
+                        <span class="block text-slate-600 text-sm font-sans mt-2">Buka lagi satu cerita yang bikin kalian tersenyum.</span>
+                    </button>
+                    <button type="button" data-prompt="Pesan singkat untuk Meisya &amp; Kholiliy: " onclick="chooseWishPrompt(this.dataset.prompt)" class="p-6 rounded-2xl bg-amber-50 border border-amber-200 hover:border-amber-400 hover:shadow-lg transition text-left">
+                        <span class="text-2xl" aria-hidden="true">✨</span>
+                        <span class="block font-serif text-navy text-lg font-bold mt-3">Pesan dari hati</span>
+                        <span class="block text-slate-600 text-sm font-sans mt-2">Satu kalimat sederhana juga berarti banyak.</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- S21: Interactive RSVP Form -->
+        <section class="w-full py-28 px-4 bg-navy relative reveal border-t-4 border-gold premium-texture">
+            <div class="max-w-2xl mx-auto relative z-10">
+                <div class="text-center mb-10">
+                    <p class="text-blue-100/80 font-sans uppercase tracking-[0.2em] text-xs mb-3">Sebuah kabar dari Anda berarti bagi kami</p>
+                    <h3 class="text-4xl md:text-5xl font-serif gold-text mb-4">Konfirmasi Kehadiran</h3>
+                    <p class="text-blue-100 font-sans">Mohon luangkan waktu sejenak untuk mengabarkan kehadiran dan menitipkan doa terbaik.</p>
+                </div>
+                
+                <form id="rsvp-form" class="bg-slate-50 p-6 md:p-10 rounded-3xl shadow-2xl font-sans" onsubmit="submitRSVP(event)">
+                    <div class="mb-6">
+                        <label class="block text-navy font-bold mb-2">Nama lengkap</label>
+                        <input type="text" id="rsvp-name" name="nama" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-gold focus:outline-none bg-white text-navy" placeholder="Tuliskan nama Anda">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-navy font-bold mb-2">Kehadiran</label>
+                        <select id="rsvp-status" name="kehadiran" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-gold focus:outline-none bg-white text-navy">
+                            <option value="Hadir (Bawa Gandengan)">Hadir bersama pendamping</option>
+                            <option value="Hadir (Sendiri)">Hadir sendiri</option>
+                            <option value="Tidak Hadir">Mohon maaf, belum dapat hadir</option>
+                        </select>
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-navy font-bold mb-2">Ucapan / Pesan Singkat</label>
+                        <textarea id="rsvp-msg" name="pesan" rows="3" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-gold focus:outline-none bg-white text-navy resize-none" placeholder="Tuliskan doa dan pesan hangat untuk Meisya & Kholiliy"></textarea>
+                    </div>
+                    
+                    <button id="btn-kirim" type="submit" class="w-full gold-btn flex items-center justify-center gap-3 text-navy font-bold py-4 rounded-full text-lg normal-case tracking-normal shadow-xl">
+                        Kirim
+                    </button>
+                    <button id="btn-loading" type="button" class="hidden w-full bg-slate-300 text-slate-600 font-bold py-4 rounded-full text-lg uppercase tracking-widest" disabled>Mengirim...</button>
+                    <p id="rsvp-status-message" class="hidden mt-4 text-center text-sm font-medium" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- S22: Live Digital Guestbook -->
+        <section class="w-full py-24 px-4 bg-slate-50 reveal border-t border-slate-200 premium-texture">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-10">
+                    <p class="text-sky-800 font-semibold uppercase tracking-[0.2em] text-xs font-sans mb-3">Digital wishes</p>
+                    <h3 class="text-3xl md:text-5xl font-serif text-navy">Doa yang Menghangatkan 📝</h3>
+                    <p class="text-slate-600 font-sans mt-4">Setiap pesan akan tersimpan di sini, menjadi bagian dari kenangan hari bahagia kami.</p>
+                </div>
+                <p id="guestbook-message" class="text-center text-slate-500 font-sans py-6" role="status" aria-live="polite">Memuat ucapan...</p>
+                <div id="guestbook-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+            </div>
+        </section>
+        
+        <!-- S23: Personal Invitation Sharing -->
+        <section class="w-full py-24 px-4 bg-white reveal premium-texture">
+            <div class="invitation-share-card max-w-3xl mx-auto rounded-[2rem] p-6 md:p-10 text-center relative z-10">
+                <p class="text-sky-800 font-semibold uppercase tracking-[0.2em] text-xs font-sans mb-3">Satu tautan, satu sapaan istimewa</p>
+                <h3 class="text-3xl md:text-4xl font-serif text-navy mb-4">Bagikan Undangan</h3>
+                <p class="text-slate-600 font-sans max-w-xl mx-auto mb-7">Tuliskan nama tamu untuk membuat tautan personal. Saat dibuka, nama tersebut akan menyambut mereka di halaman depan undangan.</p>
+                <form id="invitation-link-form" class="max-w-xl mx-auto">
+                    <label for="invitation-guest-name" class="block text-left text-navy font-semibold font-sans text-sm mb-2">Nama tamu</label>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input id="invitation-guest-name" type="text" maxlength="100" autocomplete="name" class="min-w-0 flex-1 px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-amber-400 focus:outline-none bg-white text-navy" placeholder="Contoh: Aulia dan pasangan">
+                        <button type="submit" class="gold-btn px-6 py-3 rounded-xl text-navy font-bold font-sans whitespace-nowrap">Buat tautan ✨</button>
+                    </div>
+                </form>
+                <p class="text-slate-500 text-xs font-sans mt-4">Pastikan website sudah dipublikasikan agar tautan dapat dibuka oleh para tamu.</p>
+                <div id="share-link-result" class="mt-6" hidden>
+                    <label for="invitation-share-link" class="block text-left text-navy font-semibold font-sans text-sm mb-2">Tautan undangan personal</label>
+                    <input id="invitation-share-link" type="text" readonly class="w-full px-4 py-3 rounded-xl border border-sky-200 bg-white/80 text-slate-700 text-sm font-sans" aria-live="polite">
+                    <div class="flex flex-col sm:flex-row justify-center gap-3 mt-4">
+                        <button id="copy-invitation-link" type="button" class="px-6 py-3 rounded-full border border-amber-400 text-sky-950 bg-white hover:bg-amber-50 transition font-semibold font-sans">Salin tautan</button>
+                        <button id="share-invitation-link" type="button" class="gold-btn px-6 py-3 rounded-full text-navy font-bold font-sans">Bagikan undangan</button>
+                    </div>
+                    <p class="text-slate-500 text-xs font-sans mt-4">Tamu akan melihat namanya di layar pembuka. Bagikan tautan yang sudah dibuat, bukan hanya alamat halaman utama.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- S23: Footer -->
+        <footer class="w-full text-center py-10 bg-navy relative z-10 border-t border-slate-800">
+            <p class="text-amber-500 text-xs md:text-sm tracking-[0.2em] uppercase font-sans font-medium">Yolanda Deva Apriliana Putri | © 2026 THE QUEEN BOUQUET. ALL RIGHTS RESERVED.</p>
+        </footer>
+    </main>
+
+    <div id="bouquet-philosophy-dialog" class="bouquet-dialog" role="dialog" aria-modal="true" aria-labelledby="bouquet-title" hidden>
+        <div class="bouquet-card" tabindex="-1">
+            <button id="bouquet-dialog-close" type="button" class="bouquet-dialog-close gold-btn grid h-11 w-11 place-items-center rounded-full text-navy text-2xl font-bold shadow-lg" aria-label="Tutup filosofi bouquet">&times;</button>
+            <div class="bouquet-card-content">
+                <div class="bouquet-illustration" aria-hidden="true">
+                    <img src="aset/bucket-wedding.jpeg" alt="">
+                </div>
+                <div class="bouquet-copy">
+                    <p class="mb-2 text-xs font-semibold uppercase tracking-[.2em] text-amber-700">Makna di balik rangkaian</p>
+                    <h2 id="bouquet-title" class="mb-3">Filosofi The Queen Bouquet</h2>
+                    <p class="mb-5">Bouquet ini terdiri dari susunan mawar merah melambangkan pondasi cinta dan gairah yang kuat di antara kedua mempelai. Efek kilau (glitter) pada bunga merepresentasikan harapan akan kehidupan rumah tangga yang penuh kebahagiaan, kemeriahan, dan masa depan yang bersinar</p>
+                    <p class="mb-3 font-semibold text-sky-950">Sebelum membuka acara undangan, bacalah maknanya dan pilih satu kesan yang paling terasa bagimu:</p>
+                    <div class="bouquet-impressions" role="group" aria-label="Pilih kesan terhadap filosofi bouquet">
+                        <button type="button" class="bouquet-impression-choice" data-impression="syukur" aria-pressed="false">
+                            <span class="bouquet-impression-icon" aria-hidden="true">✦</span>
+                            <span>Syukur &amp; kasih</span>
+                        </button>
+                        <button type="button" class="bouquet-impression-choice" data-impression="tenang" aria-pressed="false">
+                            <span class="bouquet-impression-icon" aria-hidden="true">❋</span>
+                            <span>Tenang &amp; selaras</span>
+                        </button>
+                        <button type="button" class="bouquet-impression-choice" data-impression="harapan" aria-pressed="false">
+                            <span class="bouquet-impression-icon" aria-hidden="true">✧</span>
+                            <span>Harapan &amp; tumbuh</span>
+                        </button>
+                    </div>
+                    <p id="bouquet-impression-feedback" class="mt-3" aria-live="polite" hidden></p>
+                    <button id="bouquet-continue" type="button" class="gold-btn mt-4 w-full rounded-full px-6 py-3 font-semibold text-navy shadow-lg" hidden>
+                        Lanjutkan ke Membuka Acara Undangan ↓
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="photo-lightbox" class="photo-lightbox" role="dialog" aria-modal="true" aria-label="Pratinjau foto" hidden>
+        <button id="photo-lightbox-close" type="button" class="gold-btn rounded-full w-12 h-12 text-navy text-2xl font-bold" aria-label="Tutup foto">&times;</button>
+        <figure class="photo-lightbox-frame">
+            <img id="photo-lightbox-image" src="" alt="">
+            <video id="photo-lightbox-video" controls playsinline hidden></video>
+            <p id="photo-lightbox-unavailable" class="text-center text-slate-600 font-sans text-sm leading-relaxed" hidden></p>
+            <figcaption id="photo-lightbox-caption" class="text-center font-serif mt-3 px-2"></figcaption>
+        </figure>
+    </div>
+
+    <script>
+        const recipientName = new URLSearchParams(window.location.search).get('to')?.trim();
+        if (recipientName) {
+            document.getElementById('recipient-name').textContent = recipientName.slice(0, 100);
+        }
+
+        const invitationLinkForm = document.getElementById('invitation-link-form');
+        const invitationGuestName = document.getElementById('invitation-guest-name');
+        const invitationShareLink = document.getElementById('invitation-share-link');
+        const shareLinkResult = document.getElementById('share-link-result');
+
+        invitationLinkForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const guestName = invitationGuestName.value.trim();
+            const invitationUrl = new URL(window.location.href);
+            invitationUrl.hash = '';
+            if (guestName) invitationUrl.searchParams.set('to', guestName);
+            else invitationUrl.searchParams.delete('to');
+            invitationShareLink.value = invitationUrl.toString();
+            shareLinkResult.hidden = false;
+            showToast(guestName ? `Tautan untuk ${guestName} siap dibagikan ✨` : 'Tautan undangan siap dibagikan ✨');
+        });
+
+        document.getElementById('copy-invitation-link').addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(invitationShareLink.value);
+                showToast('Tautan undangan berhasil disalin ✨');
+            } catch (error) {
+                try {
+                    invitationShareLink.focus();
+                    invitationShareLink.select();
+                    if (!document.execCommand('copy')) throw new Error('Browser menolak penyalinan tautan.');
+                    showToast('Tautan undangan berhasil disalin ✨');
+                } catch (fallbackError) {
+                    console.error('Tautan undangan tidak dapat disalin:', fallbackError || error);
+                    showToast('Tautan belum dapat disalin. Pilih dan salin tautan secara manual.');
+                }
+            }
+        });
+
+        document.getElementById('share-invitation-link').addEventListener('click', async () => {
+            const guestName = new URL(invitationShareLink.value).searchParams.get('to');
+            const shareData = {
+                title: guestName
+                    ? `Undangan Pernikahan Meisya & Kholiliy untuk ${guestName}`
+                    : 'Undangan Pernikahan Meisya & Kholiliy',
+                text: 'Dengan penuh sukacita, kami mengundang Anda untuk hadir di hari bahagia kami.',
+                url: invitationShareLink.value
+            };
+            if (!navigator.share) {
+                document.getElementById('copy-invitation-link').click();
+                return;
+            }
+            try {
+                await navigator.share(shareData);
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error('Undangan tidak dapat dibagikan:', error);
+                    showToast('Undangan belum dapat dibagikan. Silakan salin tautannya.');
+                }
+            }
+        });
+
+        // S0: Curtain Reveal Logic
+        document.getElementById('open-curtain-btn').addEventListener('click', function() {
+            this.parentElement.classList.add('fade-out');
+            document.getElementById('curtain-left').classList.add('open');
+            document.getElementById('curtain-right').classList.add('open');
+            
+            const main = document.getElementById('main-content');
+            main.classList.remove('hidden');
+            main.classList.add('flex');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            
+            audioPlayerBtn.classList.remove('hidden');
+            toggleAudio();
+            main.querySelector('section.reveal')?.classList.add('active');
+            setTimeout(revealVisibleContent, 0);
+
+            setTimeout(() => {
+                document.getElementById('curtain-container').style.display = 'none';
+            }, 1500);
+        });
+
+        const bouquetDialog = document.getElementById('bouquet-philosophy-dialog');
+        const bouquetDialogCard = bouquetDialog.querySelector('.bouquet-card');
+        const bouquetContinue = document.getElementById('bouquet-continue');
+        const bouquetFeedback = document.getElementById('bouquet-impression-feedback');
+        const eventDetailsContinue = document.getElementById('event-details-continue');
+        const bouquetImpressionMessages = {
+            syukur: 'Kesanmu: syukur dan kasih — semoga cinta selalu tumbuh dari hal-hal yang disyukuri.',
+            tenang: 'Kesanmu: tenang dan selaras — semoga dua hati selalu menemukan damai saat berjalan bersama.',
+            harapan: 'Kesanmu: harapan dan tumbuh — semoga setiap bab baru membawa kebaikan yang terus mekar.'
+        };
+        let lastBouquetTrigger = null;
+        let bouquetPreviousOverflow = '';
+
+        function closeBouquetDialog() {
+            bouquetDialog.hidden = true;
+            document.body.style.overflow = bouquetPreviousOverflow;
+            lastBouquetTrigger?.focus();
+        }
+
+        document.getElementById('bouquet-philosophy-open').addEventListener('click', event => {
+            lastBouquetTrigger = event.currentTarget;
+            bouquetPreviousOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+            bouquetDialog.hidden = false;
+            bouquetDialogCard.focus();
+        });
+
+        document.getElementById('bouquet-dialog-close').addEventListener('click', closeBouquetDialog);
+        bouquetDialog.addEventListener('click', event => {
+            if (event.target === bouquetDialog) closeBouquetDialog();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !bouquetDialog.hidden) closeBouquetDialog();
+        });
+
+        document.querySelectorAll('.bouquet-impression-choice').forEach(choice => {
+            choice.addEventListener('click', () => {
+                document.querySelectorAll('.bouquet-impression-choice').forEach(option => {
+                    option.setAttribute('aria-pressed', String(option === choice));
+                    option.classList.remove('is-selected');
+                });
+                void choice.offsetWidth;
+                choice.classList.add('is-selected');
+                bouquetFeedback.textContent = bouquetImpressionMessages[choice.dataset.impression];
+                bouquetFeedback.hidden = false;
+                bouquetContinue.hidden = false;
+            });
+        });
+
+        bouquetContinue.addEventListener('click', () => {
+            closeBouquetDialog();
+            eventDetailsContinue.classList.remove('hidden');
+            eventDetailsContinue.classList.add('inline-flex');
+            eventDetailsContinue.click();
+            document.getElementById('event-details').scrollIntoView({ behavior: 'instant', block: 'start' });
+        });
+
+        // Intersection Observer for Scroll Reveal animations
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        function revealVisibleContent() {
+            revealElements.forEach(el => {
+                if (el.getBoundingClientRect().top >= window.innerHeight - 100) return;
+                el.classList.add('active');
+                revealOnScroll.unobserve(el);
+            });
+        }
+
+        window.addEventListener('scroll', revealVisibleContent, { passive: true });
+
+        // S7: 3D Gate Logic
+        function openGate() {
+            document.getElementById('gate-left').classList.add('open');
+            document.getElementById('gate-right').classList.add('open');
+            const video = document.getElementById('bestie-video');
+            setTimeout(() => {
+                video.play().catch(e => console.log('Autoplay prevented by browser'));
+                document.getElementById('gate-container').style.pointerEvents = 'none';
+            }, 1000);
+        }
+
+        // S8: Countdown Timer Logic
+        const countDownDate = new Date("Oct 13, 2026 08:00:00").getTime();
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+            }
+        }, 1000);
+
+        // S17: Custom Toast & Copy Function (NO ALERTS)
+        function showToast(message) {
+            const toast = document.getElementById('custom-toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function copyToClipboard(text) {
+            // Create temporary textarea for copying
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            try {
+                document.execCommand('copy');
+                showToast('Rekening Berhasil Disalin! ✨');
+            } catch (err) {
+                showToast('Gagal menyalin rekening');
+            }
+            document.body.removeChild(el);
+        }
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyfTtMoykjHO-qgDryvOVDZfDWdwhpVkIME4xheUxXLJpCxzXzLNM4eSabyJHBCuGHj/exec';
+        const rsvpForm = document.getElementById('rsvp-form');
+        const guestbookContainer = document.getElementById('guestbook-container');
+        const guestbookMessage = document.getElementById('guestbook-message');
+
+        function setGuestbookMessage(message) {
+            guestbookMessage.textContent = message;
+            guestbookMessage.classList.remove('hidden');
+        }
+
+        async function loadGuestbook() {
+            setGuestbookMessage('Memuat ucapan...');
+            guestbookContainer.replaceChildren();
+
+            try {
+                const response = await fetch(scriptURL);
+                if (!response.ok) throw new Error(`Guestbook request failed: ${response.status}`);
+
+                const result = await response.json();
+                if (result.result !== 'success' || !Array.isArray(result.data)) {
+                    throw new Error('Format data guestbook tidak valid.');
+                }
+
+                const entries = [...result.data].reverse();
+                if (entries.length === 0) {
+                    setGuestbookMessage('Belum ada ucapan. Jadilah yang pertama mengirim doa!');
+                    return;
+                }
+
+                guestbookMessage.classList.add('hidden');
+                entries.forEach(item => {
+                    const card = document.createElement('article');
+                    card.className = 'guestbook-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-left';
+
+                    const header = document.createElement('div');
+                    header.className = 'flex flex-wrap items-start justify-between gap-2 border-b border-slate-100 pb-3 mb-3';
+
+                    const name = document.createElement('h4');
+                    name.className = 'font-serif font-bold text-navy text-lg break-words';
+                    name.textContent = item.nama || 'Tamu';
+
+                    const date = document.createElement('time');
+                    date.className = 'text-xs text-slate-400 font-sans';
+                    const parsedDate = item.waktu ? new Date(item.waktu) : null;
+                    date.textContent = parsedDate && !Number.isNaN(parsedDate.getTime())
+                        ? parsedDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+                        : '';
+
+                    const attendance = document.createElement('span');
+                    attendance.className = 'inline-block bg-amber-50 text-amber-800 text-xs px-3 py-1 rounded-full mb-3 font-sans';
+                    attendance.textContent = item.kehadiran || 'Konfirmasi kehadiran';
+
+                    const message = document.createElement('p');
+                    message.className = 'text-slate-600 font-sans text-sm leading-relaxed whitespace-pre-wrap break-words';
+                    message.textContent = item.pesan || '';
+
+                    header.append(name, date);
+                    card.append(header, attendance, message);
+                    guestbookContainer.append(card);
+                });
+            } catch (error) {
+                console.error('Gagal memuat guestbook:', error);
+                setGuestbookMessage('Ucapan belum dapat dimuat. Silakan coba lagi nanti.');
+            }
+        }
+
+        function chooseWishPrompt(prompt) {
+            const messageField = document.getElementById('rsvp-msg');
+            messageField.value = `${prompt}${messageField.value}`;
+            messageField.focus();
+            rsvpForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        const photoLightbox = document.getElementById('photo-lightbox');
+        const photoLightboxImage = document.getElementById('photo-lightbox-image');
+        const photoLightboxVideo = document.getElementById('photo-lightbox-video');
+        const photoLightboxCaption = document.getElementById('photo-lightbox-caption');
+        const photoLightboxUnavailable = document.getElementById('photo-lightbox-unavailable');
+        const photoLightboxClose = document.getElementById('photo-lightbox-close');
+        let lastFocusedPhoto = null;
+
+        function openPhotoLightbox(photo) {
+            lastFocusedPhoto = photo;
+            photoLightboxImage.hidden = false;
+            photoLightboxVideo.hidden = true;
+            photoLightboxUnavailable.hidden = true;
+            photoLightboxCaption.textContent = photo.alt;
+            photoLightboxImage.src = photo.currentSrc || photo.src;
+            photoLightboxImage.alt = photo.alt;
+            photoLightbox.hidden = false;
+            document.body.classList.add('overflow-hidden');
+            photoLightboxClose.focus();
+        }
+
+        function openMemoryLightbox(frame) {
+            lastFocusedPhoto = frame;
+            const photo = frame.querySelector('.private-memory-photo');
+            const video = frame.querySelector('.private-memory-video');
+            const caption = frame.querySelector('.private-memory-caption')?.textContent.trim() || '';
+            photoLightboxImage.hidden = true;
+            photoLightboxVideo.hidden = true;
+            photoLightboxUnavailable.hidden = true;
+            photoLightboxCaption.textContent = caption;
+            frame.classList.remove('is-video-open');
+
+            if (photo && !photo.hidden && photo.complete && photo.naturalWidth > 0) {
+                photoLightboxImage.src = photo.currentSrc || photo.src;
+                photoLightboxImage.alt = photo.alt;
+                photoLightboxImage.hidden = false;
+            } else if (video && !video.hidden) {
+                const source = video.querySelector('source');
+                photoLightboxVideo.src = video.currentSrc || source?.src || video.src;
+                photoLightboxVideo.hidden = false;
+                photoLightboxVideo.load();
+            } else {
+                photoLightboxUnavailable.textContent = 'File foto kenangan belum tersedia. Tambahkan file foto ke folder aset untuk melihatnya di sini.';
+                photoLightboxUnavailable.hidden = false;
+            }
+
+            photoLightbox.hidden = false;
+            document.body.classList.add('overflow-hidden');
+            photoLightboxClose.focus();
+        }
+
+        function closePhotoLightbox() {
+            photoLightbox.hidden = true;
+            photoLightboxImage.removeAttribute('src');
+            photoLightboxVideo.pause();
+            photoLightboxVideo.removeAttribute('src');
+            photoLightboxVideo.load();
+            photoLightboxCaption.textContent = '';
+            photoLightboxUnavailable.hidden = true;
+            document.body.classList.remove('overflow-hidden');
+            lastFocusedPhoto?.focus();
+        }
+
+        function showMemoryPhotoPlaceholder(photo) {
+            photo.hidden = true;
+            const placeholder = photo.parentElement.querySelector('.private-memory-placeholder');
+            if (placeholder) placeholder.hidden = false;
+        }
+
+        document.querySelectorAll('.private-memory-photo').forEach(photo => {
+            photo.addEventListener('error', () => showMemoryPhotoPlaceholder(photo), { once: true });
+            if (photo.complete && photo.naturalWidth === 0) showMemoryPhotoPlaceholder(photo);
+        });
+
+        const yolandaMemoryVideo = document.getElementById('yolanda-memory-video');
+        const yolandaMemoryVideoPlaceholder = document.getElementById('yolanda-memory-video-placeholder');
+        function showMemoryVideoPlaceholder() {
+            yolandaMemoryVideo.hidden = true;
+            yolandaMemoryVideoPlaceholder.hidden = false;
+        }
+        yolandaMemoryVideo.addEventListener('error', showMemoryVideoPlaceholder);
+
+        document.querySelectorAll('#main-content img').forEach(photo => {
+            photo.tabIndex = 0;
+            photo.setAttribute('role', 'button');
+            photo.setAttribute('aria-label', `Perbesar foto: ${photo.alt || 'foto undangan'}`);
+            photo.addEventListener('click', () => openPhotoLightbox(photo));
+            photo.addEventListener('keydown', event => {
+                if (event.key !== 'Enter' && event.key !== ' ') return;
+                event.preventDefault();
+                openPhotoLightbox(photo);
+            });
+        });
+
+        document.querySelectorAll('.private-memory-frame').forEach(frame => {
+            const caption = frame.querySelector('.private-memory-caption')?.textContent.trim() || 'Kenangan Meisya dan Yolanda';
+            frame.tabIndex = 0;
+            frame.setAttribute('role', 'button');
+            frame.setAttribute('aria-label', `Buka kenangan: ${caption}`);
+            frame.addEventListener('click', () => openMemoryLightbox(frame));
+            frame.addEventListener('keydown', event => {
+                if (event.key !== 'Enter' && event.key !== ' ') return;
+                event.preventDefault();
+                openMemoryLightbox(frame);
+            });
+        });
+
+        photoLightboxVideo.addEventListener('error', () => {
+            if (photoLightbox.hidden || photoLightboxVideo.hidden) return;
+            photoLightboxVideo.hidden = true;
+            photoLightboxUnavailable.textContent = 'File video kenangan belum tersedia. Tambahkan aset/yolanda-meisya.mp4 untuk memutarnya.';
+            photoLightboxUnavailable.hidden = false;
+        });
+
+        photoLightboxClose.addEventListener('click', closePhotoLightbox);
+        photoLightbox.addEventListener('click', event => {
+            if (event.target === photoLightbox) closePhotoLightbox();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !photoLightbox.hidden) closePhotoLightbox();
+        });
+
+        async function submitRSVP(e) {
+            e.preventDefault();
+            const sendButton = document.getElementById('btn-kirim');
+            const loadingButton = document.getElementById('btn-loading');
+            const statusMessage = document.getElementById('rsvp-status-message');
+
+            sendButton.classList.add('hidden');
+            loadingButton.classList.remove('hidden');
+            statusMessage.classList.add('hidden');
+
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: new FormData(rsvpForm)
+                });
+                if (!response.ok) throw new Error(`RSVP request failed: ${response.status}`);
+
+                const result = await response.json();
+                if (result.result !== 'success') throw new Error('RSVP tidak berhasil disimpan.');
+
+                rsvpForm.reset();
+                statusMessage.textContent = 'Yeay! RSVP dan ucapanmu berhasil terkirim.';
+                statusMessage.className = 'mt-4 text-center text-sm font-medium text-green-700';
+                await loadGuestbook();
+                showToast('Ucapan berhasil dikirim! ✨');
+            } catch (error) {
+                console.error('Gagal mengirim RSVP:', error);
+                statusMessage.textContent = 'Pesan belum berhasil terkirim. Coba lagi ya.';
+                statusMessage.className = 'mt-4 text-center text-sm font-medium text-red-700';
+            } finally {
+                loadingButton.classList.add('hidden');
+                sendButton.classList.remove('hidden');
+            }
+        }
+
+        // Floating Audio Logic
+        const audioEl = document.getElementById('bg-music');
+        const audioPlayerBtn = document.getElementById('audio-player');
+        const musicDisc = document.getElementById('music-disc');
+        const bestieVideo = document.getElementById('bestie-video');
+        const originalMusicVolume = audioEl.volume;
+        let bestieVideoIsPlaying = false;
+        let bestieVideoIsVisible = false;
+
+        function syncBackgroundMusicVolume() {
+            const targetVolume = bestieVideoIsPlaying && bestieVideoIsVisible
+                ? originalMusicVolume * 0.2
+                : originalMusicVolume;
+            if (audioEl.volume !== targetVolume) audioEl.volume = targetVolume;
+        }
+
+        function updateBestieVideoVisibility() {
+            const videoBounds = bestieVideo.getBoundingClientRect();
+            bestieVideoIsVisible = videoBounds.bottom > 0 && videoBounds.top < window.innerHeight;
+            syncBackgroundMusicVolume();
+        }
+
+        bestieVideo.addEventListener('play', () => {
+            bestieVideoIsPlaying = true;
+            updateBestieVideoVisibility();
+        });
+        ['pause', 'ended'].forEach(eventName => {
+            bestieVideo.addEventListener(eventName, () => {
+                bestieVideoIsPlaying = false;
+                syncBackgroundMusicVolume();
+            });
+        });
+        window.addEventListener('scroll', updateBestieVideoVisibility, { passive: true });
+        window.addEventListener('resize', updateBestieVideoVisibility);
+        let isPlaying = false;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audioEl.pause();
+                isPlaying = false;
+                musicDisc.classList.add('paused');
+                audioPlayerBtn.setAttribute('aria-label', 'Putar musik');
+                audioPlayerBtn.setAttribute('aria-pressed', 'false');
+            } else {
+                audioEl.play().then(() => {
+                    isPlaying = true;
+                    musicDisc.classList.remove('paused');
+                    audioPlayerBtn.setAttribute('aria-label', 'Jeda musik');
+                    audioPlayerBtn.setAttribute('aria-pressed', 'true');
+                }).catch(error => {
+                    isPlaying = false;
+                    musicDisc.classList.add('paused');
+                    audioPlayerBtn.setAttribute('aria-label', 'Putar musik');
+                    audioPlayerBtn.setAttribute('aria-pressed', 'false');
+                    console.error('Musik undangan tidak dapat diputar:', error);
+                });
+            }
+        }
+
+        const privateMessageGate = document.getElementById('private-message-gate');
+        const privatePasswordForm = document.getElementById('private-password-form');
+        const privatePasswordInput = document.getElementById('private-password');
+        const privatePasswordError = document.getElementById('private-password-error');
+        const privateNoteLayer = document.getElementById('private-note-layer');
+        const yolandaPrivateMusic = document.getElementById('yolanda-private-music');
+        const privateMusicStatus = document.getElementById('private-music-status');
+        const privateMusicToggle = document.getElementById('private-music-toggle');
+        const privateProgressBar = document.getElementById('private-progress-bar');
+        const privateProgressCount = document.getElementById('private-progress-count');
+        const privateProgressLabel = document.getElementById('private-progress-label');
+        const privateProgressTrack = document.querySelector('.private-note-progress');
+        const memorySteps = [...document.querySelectorAll('.memory-step')];
+        const memoryStart = document.getElementById('memory-start');
+        const memoryChallenge = document.getElementById('memory-final-challenge');
+        const letterFinale = document.getElementById('private-letter-finale');
+        const finalWish = document.getElementById('final-wish');
+        const finishPrivateMessage = document.getElementById('finish-private-message');
+        let completedPrivateChallenges = 0;
+        let foundMemoryStars = 0;
+        let activePrivateTrigger = null;
+        let previousBodyOverflow = '';
+
+        function updatePrivateProgress() {
+            const progress = Math.min(completedPrivateChallenges, 6);
+            privateProgressBar.style.width = `${(progress / 6) * 100}%`;
+            privateProgressCount.textContent = `${progress} dari 6`;
+            privateProgressTrack.setAttribute('aria-valuenow', String(progress));
+        }
+
+        function resetPrivateNoteExperience() {
+            completedPrivateChallenges = 0;
+            foundMemoryStars = 0;
+            updatePrivateProgress();
+            privateProgressLabel.textContent = 'Perjalanan pesan';
+            memoryStart.hidden = false;
+            memorySteps.forEach(step => { step.hidden = true; });
+            memoryChallenge.hidden = true;
+            letterFinale.hidden = true;
+            document.querySelectorAll('.memory-challenge-star').forEach(star => {
+                star.classList.remove('found');
+                star.setAttribute('aria-pressed', 'false');
+            });
+            document.getElementById('star-challenge-prompt').textContent = 'Ketuk tiga bintang di bawah ini satu per satu ✨';
+            document.getElementById('final-challenge-hint').textContent = 'Bintang terkumpul: 0 dari 3. Tulis satu doa, lalu pesan perpisahan akan terbuka.';
+            document.getElementById('final-wish-kept').textContent = '';
+            finalWish.value = '';
+            finishPrivateMessage.disabled = true;
+            finishPrivateMessage.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        function updatePrivateFinishButton() {
+            const canFinish = foundMemoryStars === 3 && finalWish.value.trim().length > 0;
+            finishPrivateMessage.disabled = !canFinish;
+            finishPrivateMessage.classList.toggle('opacity-50', !canFinish);
+            finishPrivateMessage.classList.toggle('cursor-not-allowed', !canFinish);
+            document.getElementById('final-challenge-hint').textContent = canFinish
+                ? 'Tantangan selesai. Doamu tersimpan di surat ini—buka pesan perpisahanmu 🤍'
+                : `Bintang terkumpul: ${foundMemoryStars} dari 3. ${foundMemoryStars === 3 ? 'Tulis satu doa untuk melanjutkan.' : 'Temukan semua bintang dan tulis satu doa.'}`;
+        }
+
+        async function startYolandaMusic() {
+            try {
+                await yolandaPrivateMusic.play();
+                privateMusicStatus.textContent = 'Lagu Sorai sedang menemani pesan khusus dari Yolanda.';
+                privateMusicToggle.setAttribute('aria-pressed', 'true');
+                privateMusicToggle.textContent = '♫ Musik khusus: aktif';
+            } catch (error) {
+                console.error('Lagu Sorai tidak dapat diputar:', error);
+                privateMusicStatus.textContent = 'Lagu Sorai belum dapat diputar. Periksa file aset atau tekan tombol musik untuk mencoba lagi.';
+                privateMusicToggle.setAttribute('aria-pressed', 'false');
+                privateMusicToggle.textContent = '♫ Coba putar Sorai';
+            }
+        }
+
+        async function stopYolandaMusic() {
+            yolandaPrivateMusic.pause();
+            yolandaPrivateMusic.currentTime = 0;
+        }
+
+        document.querySelectorAll('.private-message-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                activePrivateTrigger = trigger;
+                privatePasswordError.hidden = true;
+                privatePasswordInput.value = '';
+                previousBodyOverflow = document.body.style.overflow;
+                document.body.style.overflow = 'hidden';
+                privateMessageGate.hidden = false;
+                privateMessageGate.querySelector('.private-note-card').focus();
+                privatePasswordInput.focus();
+            });
+        });
+
+        document.getElementById('cancel-private-message').addEventListener('click', () => {
+            privateMessageGate.hidden = true;
+            document.body.style.overflow = previousBodyOverflow;
+            activePrivateTrigger?.focus();
+        });
+
+        privatePasswordForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (privatePasswordInput.value.trim().toLocaleLowerCase() !== 'bocil') {
+                privatePasswordError.hidden = false;
+                privatePasswordInput.value = '';
+                privatePasswordInput.focus();
+                return;
+            }
+
+            privatePasswordError.hidden = true;
+            privateMessageGate.hidden = true;
+            privateNoteLayer.hidden = false;
+            document.body.style.overflow = 'hidden';
+            audioEl.pause();
+            isPlaying = false;
+            musicDisc.classList.add('paused');
+            document.body.classList.add('private-note-open');
+            audioPlayerBtn.classList.add('hidden');
+            audioPlayerBtn.setAttribute('aria-label', 'Putar musik');
+            audioPlayerBtn.setAttribute('aria-pressed', 'false');
+            resetPrivateNoteExperience();
+            if (!yolandaMemoryVideo.hidden) {
+                yolandaMemoryVideo.load();
+                window.setTimeout(() => {
+                    if (yolandaMemoryVideo.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+                        showMemoryVideoPlaceholder();
+                    }
+                }, 900);
+            }
+            privateNoteLayer.querySelector('.private-note-card').focus();
+            await startYolandaMusic();
+        });
+
+        document.getElementById('begin-memory').addEventListener('click', () => {
+            memoryStart.hidden = true;
+            memorySteps[0].hidden = false;
+            privateProgressLabel.textContent = 'Tiga pesan dari Yolanda';
+        });
+
+        document.querySelectorAll('.next-memory').forEach((button, index) => {
+            button.addEventListener('click', () => {
+                memorySteps[index].hidden = true;
+                completedPrivateChallenges++;
+                updatePrivateProgress();
+                if (memorySteps[index + 1]) {
+                    memorySteps[index + 1].hidden = false;
+                    return;
+                }
+                privateProgressLabel.textContent = 'Tantangan terakhir';
+                memoryChallenge.hidden = false;
+            });
+        });
+
+        document.querySelectorAll('.memory-challenge-star').forEach(star => {
+            star.addEventListener('click', () => {
+                if (star.classList.contains('found')) return;
+                star.classList.add('found');
+                star.setAttribute('aria-pressed', 'true');
+                foundMemoryStars++;
+                completedPrivateChallenges++;
+                updatePrivateProgress();
+                document.getElementById('star-challenge-prompt').textContent = foundMemoryStars === 3
+                    ? 'Tiga bintang sudah kamu temukan. Sekarang titipkan satu doa untuk Meisya ✨'
+                    : `Satu bintang tersimpan. Tinggal ${3 - foundMemoryStars} lagi ✨`;
+                updatePrivateFinishButton();
+            });
+        });
+
+        finalWish.addEventListener('input', updatePrivateFinishButton);
+        finishPrivateMessage.addEventListener('click', () => {
+            if (finishPrivateMessage.disabled) return;
+            memoryChallenge.hidden = true;
+            letterFinale.hidden = false;
+            completedPrivateChallenges = 6;
+            privateProgressLabel.textContent = 'Pesan terbuka 🤍';
+            updatePrivateProgress();
+            document.getElementById('final-wish-kept').textContent = `Doamu untuk Keluarga Kecilmu: “${finalWish.value.trim()}”`;
+        });
+
+        privateMusicToggle.addEventListener('click', async () => {
+            const musicIsPlaying = privateMusicToggle.getAttribute('aria-pressed') === 'true';
+            if (musicIsPlaying) {
+                yolandaPrivateMusic.pause();
+                privateMusicToggle.setAttribute('aria-pressed', 'false');
+                privateMusicToggle.textContent = '♫ Musik khusus: jeda';
+                privateMusicStatus.textContent = 'Musik dijeda. Ketuk tombol di atas jika ingin mendengarnya lagi.';
+            } else {
+                await startYolandaMusic();
+            }
+        });
+
+        document.getElementById('close-private-message').addEventListener('click', async () => {
+            await stopYolandaMusic();
+            yolandaMemoryVideo.pause();
+            document.body.classList.remove('private-note-open');
+            document.body.style.overflow = previousBodyOverflow;
+            privateNoteLayer.hidden = true;
+            document.getElementById('private-goodbye').hidden = false;
+            showToast('Yolanda: Aku selalu menyayangimu, Mey 🤍');
+            document.getElementById('continue-to-invitation').focus();
+        });
+
+        document.getElementById('continue-to-invitation').addEventListener('click', () => {
+            document.getElementById('private-goodbye').hidden = true;
+            document.getElementById('open-curtain-btn').click();
+        });
+
+        audioPlayerBtn.addEventListener('click', toggleAudio);
+        audioPlayerBtn.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleAudio();
+            }
+        });
+        loadGuestbook();
+    </script>
+</body>
+</html>
