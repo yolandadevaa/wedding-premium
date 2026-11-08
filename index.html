@@ -2440,6 +2440,10 @@
             document.getElementById('open-curtain-btn').click();
         });
 
+        document.getElementById('yolanda-video-curtain').addEventListener('click', () => {
+            document.getElementById('yolanda-video-frame').classList.add('is-open');
+        });
+
         audioPlayerBtn.addEventListener('click', toggleAudio);
         audioPlayerBtn.addEventListener('keydown', event => {
             if (event.key === 'Enter' || event.key === ' ') {
