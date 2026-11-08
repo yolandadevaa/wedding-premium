@@ -179,6 +179,65 @@
             text-shadow: 0 1px 5px rgba(255,255,255,.9);
             pointer-events: none;
         }
+        .yolanda-video-frame {
+            width: min(100%, 56rem);
+            margin-inline: auto;
+            border: 4px solid #d6aa4f;
+            border-radius: 1rem;
+            box-shadow: 0 0 40px rgba(214, 170, 79, .28);
+        }
+        .yolanda-video-curtain {
+            border: 0;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+            transition: visibility 0s linear .9s;
+        }
+        .yolanda-video-curtain:focus-visible {
+            outline: 3px solid #fff3c4;
+            outline-offset: -8px;
+        }
+        .yolanda-curtain-panel {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 51%;
+            background:
+                repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 3px, transparent 3px 15px),
+                linear-gradient(90deg, #71490f, #d6aa4f 24%, #f5df9a 38%, #a87920 60%, #e6c46e 78%, #70460d);
+            box-shadow: inset 0 0 24px rgba(64, 39, 5, .42), 0 0 18px rgba(0, 0, 0, .35);
+            transition: transform .9s cubic-bezier(.76, 0, .24, 1);
+        }
+        .yolanda-curtain-panel-left { left: 0; }
+        .yolanda-curtain-panel-right { right: 0; }
+        .yolanda-curtain-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .6rem;
+            color: #fff8df;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(45, 28, 4, .8);
+            transition: opacity .25s ease;
+        }
+        .yolanda-curtain-label strong {
+            font: 600 clamp(1.2rem, 4vw, 2rem)/1.2 'Playfair Display', serif;
+        }
+        .yolanda-curtain-label small {
+            font: 500 clamp(.65rem, 2vw, .8rem)/1.4 Montserrat, sans-serif;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+        .yolanda-video-frame.is-open .yolanda-curtain-panel-left { transform: translateX(-100%); }
+        .yolanda-video-frame.is-open .yolanda-curtain-panel-right { transform: translateX(100%); }
+        .yolanda-video-frame.is-open .yolanda-curtain-label { opacity: 0; }
+        .yolanda-video-frame.is-open .yolanda-video-curtain {
+            pointer-events: none;
+            visibility: hidden;
+        }
         .invitation-header {
             position: relative;
             z-index: 1;
@@ -1211,6 +1270,30 @@
             </div>
         </section>
 
+        <!-- Video ucapan dari Yolanda -->
+        <section class="w-full py-20 px-4 bg-amber-50 relative reveal">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-8">
+                    <p class="text-amber-700 font-semibold uppercase tracking-[0.2em] text-xs font-sans mb-3">Pesan spesial</p>
+                    <h3 class="text-3xl md:text-5xl font-serif text-navy">Ucapan dari Yolanda</h3>
+                </div>
+                <div id="yolanda-video-frame" class="yolanda-video-frame relative aspect-video bg-black overflow-hidden">
+                    <video id="yolanda-wedding-video" class="w-full h-full object-contain" controls playsinline preload="metadata" aria-label="Video ucapan dari Yolanda">
+                        <source src="aset/yolanda-wedding.mp4" type="video/mp4">
+                        Browser ini belum mendukung pemutaran video.
+                    </video>
+                    <button id="yolanda-video-curtain" type="button" class="yolanda-video-curtain absolute inset-0 z-10 w-full h-full" aria-label="Buka gorden emas untuk melihat ucapan dari Yolanda">
+                        <span class="yolanda-curtain-panel yolanda-curtain-panel-left" aria-hidden="true"></span>
+                        <span class="yolanda-curtain-panel yolanda-curtain-panel-right" aria-hidden="true"></span>
+                        <span class="yolanda-curtain-label" aria-hidden="true">
+                            <strong>Ucapan dari Yolanda</strong>
+                            <small>Ketuk untuk membuka gorden</small>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- S7: 3D Video Gate -->
         <section class="w-full py-32 px-4 bg-slate-900 relative reveal">
             <div class="max-w-5xl mx-auto">
@@ -2109,36 +2192,23 @@
         const audioEl = document.getElementById('bg-music');
         const audioPlayerBtn = document.getElementById('audio-player');
         const musicDisc = document.getElementById('music-disc');
-        const bestieVideo = document.getElementById('bestie-video');
-        const originalMusicVolume = audioEl.volume;
-        let bestieVideoIsPlaying = false;
-        let bestieVideoIsVisible = false;
+        const musicTracks = [...document.querySelectorAll('audio')];
+        const originalMusicVolumes = new Map(musicTracks.map(track => [track, track.volume]));
 
         function syncBackgroundMusicVolume() {
-            const targetVolume = bestieVideoIsPlaying && bestieVideoIsVisible
-                ? originalMusicVolume * 0.2
-                : originalMusicVolume;
-            if (audioEl.volume !== targetVolume) audioEl.volume = targetVolume;
-        }
-
-        function updateBestieVideoVisibility() {
-            const videoBounds = bestieVideo.getBoundingClientRect();
-            bestieVideoIsVisible = videoBounds.bottom > 0 && videoBounds.top < window.innerHeight;
-            syncBackgroundMusicVolume();
-        }
-
-        bestieVideo.addEventListener('play', () => {
-            bestieVideoIsPlaying = true;
-            updateBestieVideoVisibility();
-        });
-        ['pause', 'ended'].forEach(eventName => {
-            bestieVideo.addEventListener(eventName, () => {
-                bestieVideoIsPlaying = false;
-                syncBackgroundMusicVolume();
+            const hasAudibleVideo = [...document.querySelectorAll('video')].some(video =>
+                !video.paused && !video.ended && !video.muted && video.volume > 0
+            );
+            const volumeScale = hasAudibleVideo ? 0.2 : 1;
+            musicTracks.forEach(track => {
+                const targetVolume = originalMusicVolumes.get(track) * volumeScale;
+                if (track.volume !== targetVolume) track.volume = targetVolume;
             });
+        }
+
+        ['play', 'pause', 'ended', 'volumechange'].forEach(eventName => {
+            document.addEventListener(eventName, syncBackgroundMusicVolume, true);
         });
-        window.addEventListener('scroll', updateBestieVideoVisibility, { passive: true });
-        window.addEventListener('resize', updateBestieVideoVisibility);
         let isPlaying = false;
 
         function toggleAudio() {
